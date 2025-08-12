@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>لوحة منظومة ريادة الأعمال - محسنة وكاملة</title>
+    <title>لوحة منظومة ريادة الأعمال - تفاعلية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
     <style>
         :root {
@@ -44,6 +44,119 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 28px 18px 48px;
+        }
+
+        .progress-wrapper {
+            max-width: 900px;
+            margin: 18px auto 0;
+            padding: 18px 12px;
+        }
+
+        .progress-container {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            padding: 30px 8px 20px;
+        }
+
+        /* المسار الرمادي الكامل */
+        .progress-container::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 26px;
+            height: 6px;
+            width: 100%;
+            background: linear-gradient(270deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.04));
+            border-radius: 999px;
+            z-index: 1;
+        }
+
+        /* الشريط الأخضر المتقدم */
+        .progress {
+            position: absolute;
+            right: 0;
+            top: 26px;
+            height: 6px;
+            width: 0%;
+            background: linear-gradient(270deg, var(--accent), #66f39b);
+            border-radius: 999px;
+            z-index: 2;
+            transition: width 320ms cubic-bezier(.2, .9, .3, 1);
+        }
+
+        .step {
+            position: relative;
+            z-index: 3;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.2s ease;
+        }
+
+        .step:hover {
+            transform: translateY(-2px);
+        }
+
+        .circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 220ms ease;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+        }
+
+        .step.completed .circle {
+            background: var(--accent);
+        }
+
+        .step.active .circle {
+            background: var(--primary);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .logo {
+            width: 98px;
+            height: 47px;
+            border-radius: 12px;
+            object-fit: contain;
+            background: white;
+        }
+
+        .label {
+            margin-top: 8px;
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 600;
+        }
+
+        .step.active .label {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        @media (max-width:560px) {
+            .circle {
+                width: 34px;
+                height: 34px;
+                font-size: 16px;
+            }
+
+            .progress-container {
+                padding: 24px 6px 18px;
+            }
         }
 
         header {
@@ -103,6 +216,29 @@
             outline: none;
         }
 
+        /* Current Phase Indicator */
+        .current-phase {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-weak), rgba(0, 209, 178, 0.1));
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--primary);
+        }
+
+        .current-phase h2 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .current-phase p {
+            margin: 5px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
         /* شبكة مؤشرات KPI */
         .kpi-grid {
             display: grid;
@@ -136,6 +272,12 @@
             padding: 16px 16px 18px;
             box-shadow: var(--shadow);
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
         }
 
         .card::after {
@@ -207,6 +349,11 @@
             border-radius: 14px;
             padding: 12px;
             box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+        }
+
+        .progress-item:hover {
+            transform: translateX(-3px);
         }
 
         .progress-top {
@@ -284,6 +431,12 @@
             background: linear-gradient(180deg, #0e1530 0%, #0d1429 100%);
             border: 1px solid #1d2a4d;
             box-shadow: var(--shadow);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
         }
 
         .phase-head {
@@ -317,16 +470,7 @@
             font-size: 14px;
         }
 
-        /* تذييل */
-        footer {
-            margin-top: 28px;
-            color: var(--muted);
-            font-size: 12px;
-            text-align: center;
-            opacity: 0.85;
-        }
-
-        /* ---------- جدول الجهات المشاركة (تطبيق خارج @media print) ---------- */
+        /* جدول الجهات المشاركة */
         .partners-section {
             margin-top: 20px;
         }
@@ -344,7 +488,7 @@
         .partners-table th,
         .partners-table td {
             border: 1px solid #1d2a4d;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             vertical-align: middle;
             color: var(--text);
@@ -353,6 +497,7 @@
         .partners-table th {
             background: var(--primary-weak);
             font-weight: 800;
+            font-size: 14px;
         }
 
         .partners-table .sub {
@@ -362,9 +507,14 @@
 
         .partners-table td {
             background: var(--card);
+            font-size: 13px;
         }
 
-        /* responsive table -> card style on small screens */
+        .partners-table tr:hover td {
+            background: rgba(0, 209, 178, 0.05);
+        }
+
+        /* responsive table */
         @media (max-width: 768px) {
 
             .partners-table,
@@ -405,40 +555,36 @@
             }
         }
 
-        /* طباعة */
-        @media print {
-            body {
-                background: white;
-                color: black;
+        /* تذييل */
+        footer {
+            margin-top: 28px;
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center;
+            opacity: 0.85;
+        }
+
+        /* Loading animation */
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Fade in animation */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
             }
 
-            .card,
-            .progress-item,
-            .phase-card {
-                box-shadow: none;
-                background: white;
-                border-color: #ccc;
-            }
-
-            .button,
-            .toolbar {
-                display: none !important;
-            }
-
-            .partners-section {
-                margin-top: 40px;
-            }
-
-            .partners-table {
-                background: white;
-                color: black;
-                box-shadow: none;
-            }
-
-            .partners-table th,
-            .partners-table td {
-                color: black;
-                border: 1px solid #000;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
@@ -459,6 +605,39 @@
                 <button class="button" id="print">طباعة / PDF</button>
             </div>
         </header>
+
+        <div class="progress-wrapper">
+            <div class="progress-container" id="container" role="list" aria-label="خط المراحل">
+                <div class="progress" id="progress" aria-hidden="true"></div>
+
+                <!-- المراحل -->
+                <div class="step active" role="listitem" data-phase="إغرس">
+                    <div class="circle" aria-hidden="true">🌱</div>
+                    <div class="label">إغرس</div>
+                </div>
+
+                <div class="step" role="listitem" data-phase="ابدأ">
+                    <div class="circle" aria-hidden="true">🚀</div>
+                    <div class="label">ابدأ</div>
+                </div>
+
+                <div class="step" role="listitem" data-phase="انطلق">
+                    <div class="circle" aria-hidden="true">⚡</div>
+                    <div class="label">انطلق</div>
+                </div>
+
+                <div class="step" role="listitem" data-phase="انمُ">
+                    <div class="circle" aria-hidden="true">🌳</div>
+                    <div class="label">انمُ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Phase Indicator -->
+        <div class="current-phase">
+            <h2 id="currentPhaseTitle">مرحلة إغرس</h2>
+            <p id="currentPhaseDesc">مرحلة زراعة الأفكار وتطوير المواهب الأولية</p>
+        </div>
 
         <!-- KPIs -->
         <section aria-label="المؤشرات الرئيسية">
@@ -481,129 +660,199 @@
 
         <!-- Partners -->
         <section aria-label="الجهات المشاركة" class="partners-section">
-            <h2 class="section-title">الجهات المشاركة في المنظومة</h2>
+            <h2 class="section-title">الجهات المشاركة في المرحلة الحالية</h2>
             <table class="partners-table" id="partnersTable">
                 <thead>
                     <tr>
                         <th>الفئة<br><span class="sub">Category</span></th>
-                        <th>إغرس<br><span class="sub">Cultivate</span></th>
-                        <th>ابدأ<br><span class="sub">Startup</span></th>
-                        <th>انطلق<br><span class="sub">Power Up</span></th>
-                        <th>انمُ<br><span class="sub">Grow</span></th>
-
+                        <th>الشركات والجهات<br><span class="sub">Companies & Organizations</span></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- صفوف مدمجة وكاملة -->
-                    <tr>
-                        <td data-label="الفئة">المواهب<br><span class="sub">Talents</span></td>
-                        <td data-label="إغرس">إنجاز عمان</td>
-                        <td data-label="ابدأ">الرفد</td>
-                        <td data-label="انطلق">PowerUp Org</td>
-                        <td data-label="انمُ"></td>
-
-                    </tr>
-                    <tr>
-                        <td data-label="الفئة">الحاضنات والمسرّعات<br><span class="sub">Incubation &amp;
-                                Acceleration</span></td>
-                        <td data-label="إغرس">Incubation Hub</td>
-                        <td data-label="ابدأ">عمانتل</td>
-                        <td data-label="انطلق">Accelerator</td>
-                        <td data-label="انمُ">GrowHub</td>
-
-                    </tr>
-                    <tr>
-                        <td data-label="الفئة">التمويل<br><span class="sub">Funding</span></td>
-                        <td data-label="إغرس"></td>
-                        <td data-label="ابدأ">FundStart</td>
-                        <td data-label="انطلق">Namou</td>
-                        <td data-label="انمُ">GrowFin</td>
-
-                    </tr>
-                    <tr>
-                        <td data-label="الفئة">دعم الشركات الكبرى<br><span class="sub">Corporate Support</span></td>
-                        <td data-label="إغرس"></td>
-                        <td data-label="ابدأ">Oman LNG</td>
-                        <td data-label="انطلق">Corporate Support</td>
-                        <td data-label="انمُ"></td>
-                    </tr>
-                    <tr>
-                        <td data-label="الفئة">الابتكار والبحث والتطوير<br><span class="sub">Innovation R &amp; D</span>
-                        <td data-label="إغرس">UK Oman Hub</td>
-                        <td data-label="ابدأ">Innovation Factory</td>
-                        <td data-label="انطلق">Industrial Innovation Academy</td>
-                        <td data-label="انمُ"></td>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-label="الفئة">الجوائز والفعاليات<br><span class="sub">Awards &amp; Events
-                                Networking</span></td>
-                        <td data-label="إغرس">Awards Org</td>
-                        <td data-label="ابدأ">أسبوع ريادة الأعمال</td>
-                        <td data-label="انطلق">GrowEvents</td>
-                        <td data-label="انمُ"></td>
-
-                    </tr>
-                    <tr>
-                        <td data-label="الفئة">التمكين الحكومي<br><span class="sub">Regulatory Support</span></td>
-                        <td data-label="إغرس">Gov Empowerment</td>
-                        <td data-label="ابدأ">وزارة الاقتصاد</td>
-                        <td data-label="انطلق">Gov Support</td>
-                        <td data-label="انمُ"></td>
-
-                    </tr>
-
-                    <!-- سطور إضافية مفصّلة -->
-                    <tr>
-                        <td data-label="الفئة">التعليم<br><span class="sub">Education</span></td>
-                        <td data-label="إغرس">وزارة التربية والتعليم</td>
-                        <td data-label="ابدأ">كلية التقنية</td>
-                        <td data-label="انطلق">TechUp Accelerator</td>
-                        <td data-label="انمُ">شركة النماء</td>
-
-                    </tr>
-                    <tr>
-                        <td data-label="الفئة">الابتكار<br><span class="sub">Innovation</span></td>
-                        <td data-label="إغرس">جمعية المبتكرين</td>
-                        <td data-label="ابدأ">Startup Oman</td>
-                        <td data-label="انطلق">مسرعة النمو</td>
-                        <td data-label="انمُ">شركة عمان القابضة</td>
-
-                    </tr>
-                    <tr>
-                        <td data-label="الفئة">ريادة الأعمال<br><span class="sub">Entrepreneurship</span></td>
-                        <td data-label="إغرس">مبادرة شبابنا</td>
-                        <td data-label="ابدأ">IncubateMe</td>
-                        <td data-label="انطلق">Launch Hub</td>
-                        <td data-label="انمُ">مجموعة الرؤية</td>
-
-                    </tr>
-                    <tr>
-                        <td data-label="الفئة">التقنية<br><span class="sub">Technology</span></td>
-                        <td data-label="إغرس">مؤسسة الإبداع</td>
-                        <td data-label="ابدأ">حاضنة الأعمال الوطنية</td>
-                        <td data-label="انطلق">Venture Plus</td>
-                        <td data-label="انمُ">شركة التطوير الدولية</td>
-
-                    </tr>
-                    <tr>
-                        <td data-label="الفئة">القيادة<br><span class="sub">Leadership</span></td>
-                        <td data-label="إغرس">أكاديمية القادة</td>
-                        <td data-label="ابدأ">LeadUp</td>
-                        <td data-label="انطلق">مشروع الريادة</td>
-                        <td data-label="انمُ">النمو الشامل</td>
-
-                    </tr>
+                <tbody id="partnersTableBody">
+                    <!-- تُملأ ديناميكياً -->
                 </tbody>
             </table>
         </section>
 
-        <footer> الإصدار التجريبي الواجهات الأمامية فقط.</footer>
+        <footer>النسخة التفاعلية - لوحة منظومة ريادة الأعمال</footer>
     </div>
 
     <script>
-        /* ------------ أولا: دوال SVG للأيقونات (مطبَّقة قبل بيانات الـ kpis) ------------ */
+        // هيكل البيانات للمراحل المختلفة
+        const phaseData = {
+            "إغرس": {
+                kpis: [
+                    { label: "عدد المواهب المسجّلة/المستفيدة", value: 3200, icon: "people" },
+                    { label: "عدد الحاضنات والمسرّعات", value: 8, icon: "rocket" },
+                    { label: "إجمالي التمويل المقدم", value: 2500000, suffix: "ر.ع", icon: "money" },
+                    { label: "عدد الشركات الكبرى الداعمة", value: 5, icon: "building" },
+                    { label: "عدد مشاريع البحث والابتكار", value: 15, icon: "lab" },
+                    { label: "عدد الجوائز والفعاليات المُقامة", value: 12, icon: "trophy" },
+                    { label: "عدد المبادرات ضمن التمكين الحكومي", value: 6, icon: "shield" },
+                    { label: "عدد المستخدمين النشطين", value: 850, icon: "user" }
+                ],
+                progress: [
+                    { label: "نسبة تنفيذ مبادرات المواهب", value: 75.2 },
+                    { label: "نسبة تفعيل الحاضنات والمسرّعات", value: 60.8 },
+                    { label: "نسبة صرف التمويل المخطط", value: 45.3 },
+                    { label: "نسبة تحقيق أهداف دعم الشركات الكبرى", value: 80.5 },
+                    { label: "نسبة إنجاز مشاريع البحث والابتكار", value: 35.7 }
+                ],
+                phases: [
+                    { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
+                    { name: "ابدأ", info: "عدد الشركات الممولة مبدئيًا", value: 0 },
+                    { name: "انطلق", info: "عدد الشركات التي دخلت السوق", value: 0 },
+                    { name: "انمُ", info: "عدد الشركات المتوسعة/المستدامة", value: 0 }
+                ],
+                partners: [
+                    { category: "المواهب", companies: ["إنجاز عمان", "أكاديمية المبدعين", "مركز تطوير المهارات"] },
+                    { category: "الحاضنات والمسرّعات", companies: ["Incubation Hub", "مركز الإبداع الأولي"] },
+                    { category: "التمويل", companies: ["صندوق الأفكار", "مبادرة التمويل الأولي"] },
+                    { category: "دعم الشركات الكبرى", companies: ["مؤسسة الدعم المبكر"] },
+                    { category: "الابتكار والبحث والتطوير", companies: ["UK Oman Hub", "مركز البحوث التطبيقية"] },
+                    { category: "الجوائز والفعاليات", companies: ["Awards Org", "مهرجان الأفكار"] },
+                    { category: "التمكين الحكومي", companies: ["Gov Empowerment", "مبادرة الحكومة الرقمية"] },
+                    { category: "التعليم", companies: ["وزارة التربية والتعليم", "المعهد التقني"] },
+                    { category: "الابتكار", companies: ["جمعية المبتكرين", "مختبر الأفكار"] },
+                    { category: "ريادة الأعمال", companies: ["مبادرة شبابنا", "نادي رواد الأعمال"] },
+                    { category: "التقنية", companies: ["مؤسسة الإبداع", "مركز التقنيات الناشئة"] },
+                    { category: "القيادة", companies: ["أكاديمية القادة", "برنامج القيادة الشابة"] }
+                ]
+            },
+
+            "ابدأ": {
+                kpis: [
+                    { label: "عدد المواهب المسجّلة/المستفيدة", value: 5800, icon: "people" },
+                    { label: "عدد الحاضنات والمسرّعات", value: 18, icon: "rocket" },
+                    { label: "إجمالي التمويل المقدم", value: 8200000, suffix: "ر.ع", icon: "money" },
+                    { label: "عدد الشركات الكبرى الداعمة", value: 12, icon: "building" },
+                    { label: "عدد مشاريع البحث والابتكار", value: 35, icon: "lab" },
+                    { label: "عدد الجوائز والفعاليات المُقامة", value: 25, icon: "trophy" },
+                    { label: "عدد المبادرات ضمن التمكين الحكومي", value: 10, icon: "shield" },
+                    { label: "عدد المستخدمين النشطين", value: 1650, icon: "user" }
+                ],
+                progress: [
+                    { label: "نسبة تنفيذ مبادرات المواهب", value: 82.4 },
+                    { label: "نسبة تفعيل الحاضنات والمسرّعات", value: 75.6 },
+                    { label: "نسبة صرف التمويل المخطط", value: 68.9 },
+                    { label: "نسبة تحقيق أهداف دعم الشركات الكبرى", value: 88.2 },
+                    { label: "نسبة إنجاز مشاريع البحث والابتكار", value: 52.1 }
+                ],
+                phases: [
+                    { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
+                    { name: "ابدأ", info: "عدد الشركات الممولة مبدئيًا", value: 180 },
+                    { name: "انطلق", info: "عدد الشركات التي دخلت السوق", value: 0 },
+                    { name: "انمُ", info: "عدد الشركات المتوسعة/المستدامة", value: 0 }
+                ],
+                partners: [
+                    { category: "المواهب", companies: ["الرفد", "مركز تطوير المواهب", "أكاديمية الإبداع"] },
+                    { category: "الحاضنات والمسرّعات", companies: ["عمانتل", "حاضنة الأعمال الوطنية", "مسرعة الابتكار"] },
+                    { category: "التمويل", companies: ["FundStart", "صندوق رأس المال الجريء", "بنك التنمية"] },
+                    { category: "دعم الشركات الكبرى", companies: ["Oman LNG", "شركة النفط العمانية", "مجموعة سهيل"] },
+                    { category: "الابتكار والبحث والتطوير", companies: ["Innovation Factory", "مركز البحوث المتقدمة"] },
+                    { category: "الجوائز والفعاليات", companies: ["أسبوع ريادة الأعمال", "مؤتمر الابتكار"] },
+                    { category: "التمكين الحكومي", companies: ["وزارة الاقتصاد", "هيئة المناطق الاقتصادية"] },
+                    { category: "التعليم", companies: ["كلية التقنية", "جامعة السلطان قابوس"] },
+                    { category: "الابتكار", companies: ["Startup Oman", "مركز الابتكار التقني"] },
+                    { category: "ريادة الأعمال", companies: ["IncubateMe", "شبكة رواد الأعمال"] },
+                    { category: "التقنية", companies: ["حاضنة الأعمال الوطنية", "مركز التقنيات المالية"] },
+                    { category: "القيادة", companies: ["LeadUp", "معهد القيادة الإدارية"] }
+                ]
+            },
+
+            "انطلق": {
+                kpis: [
+                    { label: "عدد المواهب المسجّلة/المستفيدة", value: 8900, icon: "people" },
+                    { label: "عدد الحاضنات والمسرّعات", value: 28, icon: "rocket" },
+                    { label: "إجمالي التمويل المقدم", value: 12800000, suffix: "ر.ع", icon: "money" },
+                    { label: "عدد الشركات الكبرى الداعمة", value: 20, icon: "building" },
+                    { label: "عدد مشاريع البحث والابتكار", value: 58, icon: "lab" },
+                    { label: "عدد الجوائز والفعاليات المُقامة", value: 38, icon: "trophy" },
+                    { label: "عدد المبادرات ضمن التمكين الحكومي", value: 15, icon: "shield" },
+                    { label: "عدد المستخدمين النشطين", value: 2450, icon: "user" }
+                ],
+                progress: [
+                    { label: "نسبة تنفيذ مبادرات المواهب", value: 88.7 },
+                    { label: "نسبة تفعيل الحاضنات والمسرّعات", value: 82.3 },
+                    { label: "نسبة صرف التمويل المخطط", value: 76.4 },
+                    { label: "نسبة تحقيق أهداف دعم الشركات الكبرى", value: 92.1 },
+                    { label: "نسبة إنجاز مشاريع البحث والابتكار", value: 68.9 }
+                ],
+                phases: [
+                    { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
+                    { name: "ابدأ", info: "عدد الشركات الممولة مبدئيًا", value: 180 },
+                    { name: "انطلق", info: "عدد الشركات التي دخلت السوق", value: 120 },
+                    { name: "انمُ", info: "عدد الشركات المتوسعة/المستدامة", value: 0 }
+                ],
+                partners: [
+                    { category: "المواهب", companies: ["PowerUp Org", "مركز تسريع المواهب", "أكاديمية التميز"] },
+                    { category: "الحاضنات والمسرّعات", companies: ["Accelerator", "مسرعة النمو", "PowerUp Hub"] },
+                    { category: "التمويل", companies: ["Namou", "صندوق الاستثمار المباشر", "مجموعة الاستثمار"] },
+                    { category: "دعم الشركات الكبرى", companies: ["Corporate Support", "مجموعة أوربك", "شركة تنمية نفط عمان"] },
+                    { category: "الابتكار والبحث والتطوير", companies: ["Industrial Innovation Academy", "مركز الابتكار الصناعي"] },
+                    { category: "الجوائز والفعاليات", companies: ["GrowEvents", "معرض التقنيات الناشئة"] },
+                    { category: "التمكين الحكومي", companies: ["Gov Support", "مجلس البحث العلمي"] },
+                    { category: "التعليم", companies: ["TechUp Accelerator", "الجامعة الألمانية للتكنولوجيا"] },
+                    { category: "الابتكار", companies: ["مسرعة النمو", "مركز الابتكار المفتوح"] },
+                    { category: "ريادة الأعمال", companies: ["Launch Hub", "شبكة المستثمرين الملائكة"] },
+                    { category: "التقنية", companies: ["Venture Plus", "مركز التقنيات المتقدمة"] },
+                    { category: "القيادة", companies: ["مشروع الريادة", "معهد الإدارة العامة"] }
+                ]
+            },
+
+            "انمُ": {
+                kpis: [
+                    { label: "عدد المواهب المسجّلة/المستفيدة", value: 12840, icon: "people" },
+                    { label: "عدد الحاضنات والمسرّعات", value: 42, icon: "rocket" },
+                    { label: "إجمالي التمويل المقدم", value: 18750000.55, suffix: "ر.ع", icon: "money" },
+                    { label: "عدد الشركات الكبرى الداعمة", value: 31, icon: "building" },
+                    { label: "عدد مشاريع البحث والابتكار", value: 96, icon: "lab" },
+                    { label: "عدد الجوائز والفعاليات المُقامة", value: 57, icon: "trophy" },
+                    { label: "عدد المبادرات ضمن التمكين الحكومي", value: 22, icon: "shield" },
+                    { label: "عدد المستخدمين النشطين", value: 3421, icon: "user" }
+                ],
+                progress: [
+                    { label: "نسبة تنفيذ مبادرات المواهب", value: 85.7 },
+                    { label: "نسبة تفعيل الحاضنات والمسرّعات", value: 70.4 },
+                    { label: "نسبة صرف التمويل المخطط", value: 65 },
+                    { label: "نسبة تحقيق أهداف دعم الشركات الكبرى", value: 90 },
+                    { label: "نسبة إنجاز مشاريع البحث والابتكار", value: 39.3 }
+                ],
+                phases: [
+                    { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
+                    { name: "ابدأ", info: "عدد الشركات الممولة مبدئيًا", value: 180 },
+                    { name: "انطلق", info: "عدد الشركات التي دخلت السوق", value: 120 },
+                    { name: "انمُ", info: "عدد الشركات المتوسعة/المستدامة", value: 75 }
+                ],
+                partners: [
+                    { category: "المواهب", companies: ["مركز التميز المتقدم", "أكاديمية القادة المستقبليين"] },
+                    { category: "الحاضنات والمسرّعات", companies: ["GrowHub", "مسرعة النمو المتقدمة", "مركز التوسع"] },
+                    { category: "التمويل", companies: ["GrowFin", "صندوق النمو المستدام", "مجموعة الاستثمار الكبرى"] },
+                    { category: "دعم الشركات الكبرى", companies: ["مجموعة أوربك المتقدمة", "شركة الاستثمار الوطنية"] },
+                    { category: "الابتكار والبحث والتطوير", companies: ["مركز الأبحاث المتقدمة", "معهد الابتكار الصناعي"] },
+                    { category: "الجوائز والفعاليات", companies: ["مؤتمر النمو الدولي", "جوائز التميز"] },
+                    { category: "التمكين الحكومي", companies: ["هيئة التنمية المستدامة", "مجلس الاستثمار"] },
+                    { category: "التعليم", companies: ["شركة النماء", "الجامعة التقنية المتقدمة"] },
+                    { category: "الابتكار", companies: ["شركة عمان القابضة", "مركز الابتكار الاستراتيجي"] },
+                    { category: "ريادة الأعمال", companies: ["مجموعة الرؤية", "شبكة المستثمرين الدوليين"] },
+                    { category: "التقنية", companies: ["شركة التطوير الدولية", "مركز التقنيات المستقبلية"] },
+                    { category: "القيادة", companies: ["النمو الشامل", "معهد القيادة الاستراتيجية"] }
+                ]
+            }
+        };
+
+        // المرحلة الحالية
+        let currentPhase = "إغرس";
+
+        // وصف المراحل
+        const phaseDescriptions = {
+            "إغرس": "مرحلة زراعة الأفكار وتطوير المواهب الأولية",
+            "ابدأ": "مرحلة بدء المشاريع والحصول على التمويل الأولي",
+            "انطلق": "مرحلة دخول السوق وتسريع النمو",
+            "انمُ": "مرحلة التوسع والنمو المستدام"
+        };
+
+        // دوال SVG للأيقونات
         function svgWrap(path) {
             return `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg>`;
@@ -633,59 +882,39 @@
         function svgUser() {
             return svgWrap("M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z");
         }
-        function svgMessage() {
-            return svgWrap("M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z");
-        }
-        function svgSettings() {
-            return svgWrap("M19.14 12.94a1.73 1.73 0 0 0 0-1.88l2.06-1.6-2-3.46-2.44 1a5.68 5.68 0 0 0-1.54-.9l-.38-2.6h-4l-.38 2.6a5.7 5.7 0 0 0-1.54.9l-2.44-1-2 3.46 2.06 1.6a1.73 1.73 0 0 0 0 1.88l-2.06 1.6 2 3.46 2.44-1a5.7 5.7 0 0 0 1.54.9l.38 2.6h4l.38-2.6a5.7 5.7 0 0 0 1.54-.9l2.44 1 2-3.46z");
-        }
 
-        /* ------------ البيانات (KPI / Progress / Phases) ------------ */
-        const data = {
-            kpis: [
-                { label: "عدد المواهب المسجّلة/المستفيدة", value: 12840, icon: svgPeople() },
-                { label: "عدد الحاضنات والمسرّعات", value: 42, icon: svgRocket() },
-                { label: "إجمالي التمويل المقدم", value: 18750000.55, suffix: "ر.ع", icon: svgMoney() },
-                { label: "عدد الشركات الكبرى الداعمة", value: 31, icon: svgBuilding() },
-                { label: "عدد مشاريع البحث والابتكار", value: 96, icon: svgLab() },
-                { label: "عدد الجوائز والفعاليات المُقامة", value: 57, icon: svgTrophy() },
-                { label: "عدد المبادرات ضمن التمكين الحكومي", value: 22, icon: svgShield() },
-                { label: "عدد المستخدمين النشطين", value: 3421, icon: svgUser() },
-
-            ],
-            progress: [
-                { label: "نسبة تنفيذ مبادرات المواهب", value: 85.7 },
-                { label: "نسبة تفعيل الحاضنات والمسرّعات", value: 70.4 },
-                { label: "نسبة صرف التمويل المخطط", value: 65 },
-                { label: "نسبة تحقيق أهداف دعم الشركات الكبرى", value: 90 },
-                { label: "نسبة إنجاز مشاريع البحث والابتكار", value: 39.3 },
-            ],
-            phases: [
-                { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
-                { name: "ابدأ", info: "عدد الشركات الممولة مبدئيًا", value: 180 },
-                { name: "انطلق", info: "عدد الشركات التي دخلت السوق", value: 120 },
-                { name: "انمُ", info: "عدد الشركات المتوسعة/المستدامة", value: 75 },
-            ]
+        // خريطة الأيقونات
+        const iconMap = {
+            people: svgPeople(),
+            rocket: svgRocket(),
+            money: svgMoney(),
+            building: svgBuilding(),
+            lab: svgLab(),
+            trophy: svgTrophy(),
+            shield: svgShield(),
+            user: svgUser()
         };
 
-        /* ------------ أدوات تنسيق الأرقام (عربي/لاتيني) ------------ */
+        // أدوات تنسيق الأرقام
         let useArabicIndic = true;
         const fmt = (n) => new Intl.NumberFormat("ar-EG", { maximumFractionDigits: 2 }).format(n);
         const fmtLatin = (n) => new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(n);
 
-        /* ------------ بناء الواجهة ديناميكيًا ------------ */
+        // بناء الواجهة ديناميكيًا
         function renderKPIs() {
             const wrap = document.getElementById("kpiGrid");
             wrap.innerHTML = "";
+            const data = phaseData[currentPhase];
+
             data.kpis.forEach((k) => {
                 const isRial = k.suffix === "ر.ع";
                 const suffixHtml = k.suffix && !isRial ? `<span class="suffix">${k.suffix}</span>` : isRial ? `<span class="suffix">ر.ع</span>` : "";
                 const card = document.createElement("div");
-                card.className = "card";
+                card.className = "card fade-in";
                 card.setAttribute("role", "group");
                 card.innerHTML = `
           <div class="kpi" aria-label="${k.label}">
-            <div class="icon" aria-hidden="true">${k.icon}</div>
+            <div class="icon" aria-hidden="true">${iconMap[k.icon]}</div>
             <div>
               <h3>${k.label}</h3>
               <div class="value">
@@ -702,9 +931,11 @@
         function renderProgress() {
             const list = document.getElementById("progressList");
             list.innerHTML = "";
+            const data = phaseData[currentPhase];
+
             data.progress.forEach((p) => {
                 const row = document.createElement("div");
-                row.className = "progress-item";
+                row.className = "progress-item fade-in";
                 let barClass = "red";
                 if (p.value >= 70) barClass = "green";
                 else if (p.value >= 40) barClass = "orange";
@@ -727,9 +958,11 @@
         function renderPhases() {
             const box = document.getElementById("phases");
             box.innerHTML = "";
+            const data = phaseData[currentPhase];
+
             data.phases.forEach((ph) => {
                 const el = document.createElement("div");
-                el.className = "phase-card";
+                el.className = "phase-card fade-in";
                 el.innerHTML = `
           <div class="phase-head">
             <div class="phase-name">${ph.name}</div>
@@ -742,7 +975,23 @@
             });
         }
 
-        /* ------------ تحريك العدادات مع دعم عشري وتبديل الأرقام ------------ */
+        function renderPartners() {
+            const tbody = document.getElementById("partnersTableBody");
+            tbody.innerHTML = "";
+            const data = phaseData[currentPhase];
+
+            data.partners.forEach((partner) => {
+                const row = document.createElement("tr");
+                row.className = "fade-in";
+                row.innerHTML = `
+                    <td data-label="الفئة">${partner.category}</td>
+                    <td data-label="الشركات والجهات">${partner.companies.join("، ")}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // تحريك العدادات
         function animateCounters() {
             const nums = document.querySelectorAll(".num");
             nums.forEach((el) => {
@@ -753,55 +1002,147 @@
                 const decimals = (Math.abs(target % 1) > 0) ? 2 : 0;
 
                 function tick(now) {
-                    const progress = Math.min(1, (now - start) / duration);
-                    // نبدأ من 20% لإعطاء إحساس بالتحرّك ثم نصل للقيمة الحقيقية
-                    const val = target * (0.2 + 0.8 * progress);
-                    let displayVal = decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toString();
+                    const elapsed = now - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+                    const current = target * eased;
 
-                    const number = parseFloat(displayVal);
-                    el.textContent = isNaN(number) ? displayVal : (useArabicIndic ? fmt(number) : fmtLatin(number));
+                    if (useArabicIndic) {
+                        el.textContent = fmt(current);
+                    } else {
+                        el.textContent = fmtLatin(current);
+                    }
 
                     if (progress < 1) {
                         requestAnimationFrame(tick);
                     } else {
-                        // القيمة النهائية (مضمونة)
-                        el.textContent = useArabicIndic ? fmt(target) : fmtLatin(target);
-                        // إذا كان عنصر العملة يملك suffix خارجي (مثل ر.ع) فوجود مسافة سليمة مفيد
-                        if (isCurrency) {
-                            // نضيف فاصل مسافة ضيقة داخل العنصر لاتفاف الفاصل مع الـ .suffix الظاهرة
-                            el.textContent = el.textContent + "\u00A0";
+                        // تأكد من القيمة النهائية
+                        if (useArabicIndic) {
+                            el.textContent = fmt(target);
+                        } else {
+                            el.textContent = fmtLatin(target);
                         }
                     }
                 }
-
                 requestAnimationFrame(tick);
             });
         }
 
-        /* ------------ وظائف تفاعلية صغيرة ------------ */
-        document.getElementById("toggleNumerals").onclick = () => {
-            useArabicIndic = !useArabicIndic;
-            animateCounters(); // نعيد تشغيل العدادات لتحديث الشكل
-        };
-        document.getElementById("print").onclick = () => window.print();
-
-        /* ------------ تحديث التاريخ ------------ */
-        function updateDate() {
-            const el = document.getElementById("lastUpdated");
-            const d = new Date();
-            el.textContent = d.toLocaleDateString("ar-EG", { year: "numeric", month: "long", day: "numeric" });
+        // تحديث شريط التقدم
+        function updateProgressBar() {
+            const phases = ["إغرس", "ابدأ", "انطلق", "انمُ"];
+            const currentIndex = phases.indexOf(currentPhase);
+            const progressBar = document.getElementById("progress");
+            const progressWidth = ((currentIndex + 1) / phases.length) * 100;
+            progressBar.style.width = progressWidth + "%";
         }
 
-        /* ------------ تهيئة الواجهة عند التحميل ------------ */
+        // تحديث حالة المراحل
+        function updatePhaseSteps() {
+            const steps = document.querySelectorAll(".step");
+            const phases = ["إغرس", "ابدأ", "انطلق", "انمُ"];
+            const currentIndex = phases.indexOf(currentPhase);
+
+            steps.forEach((step, index) => {
+                step.classList.remove("active", "completed");
+                if (index === currentIndex) {
+                    step.classList.add("active");
+                } else if (index < currentIndex) {
+                    step.classList.add("completed");
+                }
+            });
+        }
+
+        // تحديث مؤشر المرحلة الحالية
+        function updateCurrentPhaseIndicator() {
+            document.getElementById("currentPhaseTitle").textContent = `مرحلة ${currentPhase}`;
+            document.getElementById("currentPhaseDesc").textContent = phaseDescriptions[currentPhase];
+        }
+
+        // تحديث البيانات للمرحلة الجديدة
+        function updatePhaseData(newPhase) {
+            if (newPhase === currentPhase) return;
+
+            // إضافة تأثير التحميل
+            document.body.classList.add("loading");
+
+            setTimeout(() => {
+                currentPhase = newPhase;
+                updateCurrentPhaseIndicator();
+                updatePhaseSteps();
+                updateProgressBar();
+                renderKPIs();
+                renderProgress();
+                renderPhases();
+                renderPartners();
+
+                // إزالة تأثير التحميل وبدء الرسوم المتحركة
+                document.body.classList.remove("loading");
+                setTimeout(() => {
+                    animateCounters();
+                }, 100);
+            }, 300);
+        }
+
+        // إعداد أحداث النقر على المراحل
+        function setupPhaseClickHandlers() {
+            const steps = document.querySelectorAll(".step");
+            steps.forEach((step) => {
+                step.addEventListener("click", () => {
+                    const phase = step.dataset.phase;
+                    updatePhaseData(phase);
+                });
+            });
+        }
+
+        // تبديل شكل الأرقام
+        function toggleNumerals() {
+            useArabicIndic = !useArabicIndic;
+            animateCounters();
+        }
+
+        // طباعة
+        function printPage() {
+            window.print();
+        }
+
+        // تحديث التاريخ
+        function updateLastUpdated() {
+            const now = new Date();
+            const formatted = now.toLocaleDateString("ar-EG", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+            document.getElementById("lastUpdated").textContent = formatted;
+        }
+
+        // التهيئة الأولية
         function init() {
+            updateLastUpdated();
+            updateCurrentPhaseIndicator();
+            updatePhaseSteps();
+            updateProgressBar();
             renderKPIs();
             renderProgress();
             renderPhases();
-            animateCounters();
-            updateDate();
+            renderPartners();
+            setupPhaseClickHandlers();
+
+            // بدء الرسوم المتحركة بعد تحميل الصفحة
+            setTimeout(() => {
+                animateCounters();
+            }, 500);
+
+            // إعداد أحداث الأزرار
+            document.getElementById("toggleNumerals").addEventListener("click", toggleNumerals);
+            document.getElementById("print").addEventListener("click", printPage);
         }
 
-        init();
+        // بدء التطبيق عند تحميل الصفحة
+        document.addEventListener("DOMContentLoaded", init);
     </script>
 </body>
 
