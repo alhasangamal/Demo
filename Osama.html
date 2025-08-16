@@ -46,6 +46,7 @@
             padding: 28px 18px 48px;
         }
 
+        /* شريط مراحل المنظومة (Stepper) */
         .progress-wrapper {
             max-width: 900px;
             margin: 18px auto 0;
@@ -61,7 +62,6 @@
             padding: 30px 8px 20px;
         }
 
-        /* المسار الرمادي الكامل */
         .progress-container::before {
             content: "";
             position: absolute;
@@ -74,7 +74,6 @@
             z-index: 1;
         }
 
-        /* الشريط الأخضر المتقدم */
         .progress {
             position: absolute;
             right: 0;
@@ -127,18 +126,10 @@
             box-shadow: 0 0 20px var(--primary);
         }
 
-        .logo {
-            width: 98px;
-            height: 47px;
-            border-radius: 12px;
-            object-fit: contain;
-            background: white;
-        }
-
         .label {
             margin-top: 8px;
             font-size: 14px;
-            opacity: 0.95;
+            opacity: .95;
             font-weight: 600;
         }
 
@@ -184,7 +175,7 @@
         h1 {
             margin: 0;
             font-size: 28px;
-            letter-spacing: 0.3px;
+            letter-spacing: .3px;
         }
 
         .sub {
@@ -205,7 +196,7 @@
             padding: 10px 14px;
             border-radius: 12px;
             cursor: pointer;
-            transition: 0.2s ease;
+            transition: .2s ease;
             user-select: none;
         }
 
@@ -216,12 +207,12 @@
             outline: none;
         }
 
-        /* Current Phase Indicator */
+        /* مؤشر المرحلة الحالية */
         .current-phase {
             text-align: center;
             margin: 20px 0;
             padding: 15px;
-            background: linear-gradient(135deg, var(--primary-weak), rgba(0, 209, 178, 0.1));
+            background: linear-gradient(135deg, var(--primary-weak), rgba(0, 209, 178, .1));
             border-radius: var(--radius-lg);
             border: 1px solid var(--primary);
         }
@@ -246,19 +237,19 @@
             grid-template-columns: repeat(4, 1fr);
         }
 
-        @media (max-width: 1100px) {
+        @media (max-width:1100px) {
             .kpi-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
 
-        @media (max-width: 820px) {
+        @media (max-width:820px) {
             .kpi-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 520px) {
+        @media (max-width:520px) {
             .kpi-grid {
                 grid-template-columns: 1fr;
             }
@@ -272,25 +263,12 @@
             padding: 16px 16px 18px;
             box-shadow: var(--shadow);
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform .3s ease, box-shadow .3s ease;
         }
 
         .card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .card::after {
-            content: "";
-            position: absolute;
-            inset: -1px;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, #2a3b6a 0%, transparent 45%, #2a3b6a 100%);
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .4);
         }
 
         .kpi {
@@ -321,7 +299,7 @@
         .kpi .value {
             font-size: 26px;
             font-weight: 800;
-            letter-spacing: 0.4px;
+            letter-spacing: .4px;
         }
 
         .kpi .suffix {
@@ -331,81 +309,6 @@
             font-weight: 600;
         }
 
-        /* شريط تقدم */
-        .section-title {
-            margin: 28px 0 12px;
-            font-size: 20px;
-            font-weight: 800;
-        }
-
-        .progress-list {
-            display: grid;
-            gap: 12px;
-        }
-
-        .progress-item {
-            background: #0f1833;
-            border: 1px solid #1d2a4d;
-            border-radius: 14px;
-            padding: 12px;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s ease;
-        }
-
-        .progress-item:hover {
-            transform: translateX(-3px);
-        }
-
-        .progress-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-
-        .progress-top .label {
-            color: var(--muted);
-            font-weight: 600;
-        }
-
-        .progress-top .percent {
-            font-weight: 800;
-        }
-
-        .bar {
-            position: relative;
-            height: 10px;
-            background: #0a1230;
-            border: 1px solid #1d2a4d;
-            border-radius: 999px;
-            overflow: hidden;
-        }
-
-        .bar>span {
-            position: absolute;
-            inset: 0;
-            width: 0%;
-            border-radius: inherit;
-            box-shadow: 0 0 0 1px transparent inset, 0 0 22px transparent;
-            transition: width 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.5s ease, box-shadow 0.5s ease;
-        }
-
-        .bar.green>span {
-            background: linear-gradient(90deg, var(--success) 0%, #50f381 100%);
-            box-shadow: 0 0 0 1px #23d160 inset, 0 0 22px #23d160;
-        }
-
-        .bar.orange>span {
-            background: linear-gradient(90deg, var(--warning) 0%, #ffd56b 100%);
-            box-shadow: 0 0 0 1px #ffae42 inset, 0 0 22px #ffae42;
-        }
-
-        .bar.red>span {
-            background: linear-gradient(90deg, var(--danger) 0%, #ff6b6b 100%);
-            box-shadow: 0 0 0 1px #ff4d4f inset, 0 0 22px #ff4d4f;
-        }
-
         /* أقسام المراحل */
         .phases {
             display: grid;
@@ -413,13 +316,13 @@
             gap: 16px;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width:900px) {
             .phases {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 520px) {
+        @media (max-width:520px) {
             .phases {
                 grid-template-columns: 1fr;
             }
@@ -431,7 +334,7 @@
             background: linear-gradient(180deg, #0e1530 0%, #0d1429 100%);
             border: 1px solid #1d2a4d;
             box-shadow: var(--shadow);
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            transition: transform .2s ease, border-color .2s ease;
         }
 
         .phase-card:hover {
@@ -448,7 +351,7 @@
 
         .phase-name {
             font-weight: 800;
-            letter-spacing: 0.3px;
+            letter-spacing: .3px;
         }
 
         .badge {
@@ -511,11 +414,11 @@
         }
 
         .partners-table tr:hover td {
-            background: rgba(0, 209, 178, 0.05);
+            background: rgba(0, 209, 178, .05);
         }
 
-        /* responsive table */
-        @media (max-width: 768px) {
+        /* Responsive table */
+        @media (max-width:768px) {
 
             .partners-table,
             .partners-table thead,
@@ -555,25 +458,23 @@
             }
         }
 
-        /* تذييل */
         footer {
             margin-top: 28px;
             color: var(--muted);
             font-size: 12px;
             text-align: center;
-            opacity: 0.85;
+            opacity: .85;
         }
 
-        /* Loading animation */
+        /* حالة تحميل خفيفة + Fade-in */
         .loading {
-            opacity: 0.5;
+            opacity: .5;
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity .3s ease;
         }
 
-        /* Fade in animation */
         .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn .5s ease-in-out;
         }
 
         @keyframes fadeIn {
@@ -584,7 +485,7 @@
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: none;
             }
         }
     </style>
@@ -606,11 +507,11 @@
             </div>
         </header>
 
+        <!-- شريط المراحل -->
         <div class="progress-wrapper">
             <div class="progress-container" id="container" role="list" aria-label="خط المراحل">
                 <div class="progress" id="progress" aria-hidden="true"></div>
 
-                <!-- المراحل -->
                 <div class="step active" role="listitem" data-phase="إغرس">
                     <div class="circle" aria-hidden="true">🌱</div>
                     <div class="label">إغرس</div>
@@ -633,7 +534,7 @@
             </div>
         </div>
 
-        <!-- Current Phase Indicator -->
+        <!-- المرحلة الحالية -->
         <div class="current-phase">
             <h2 id="currentPhaseTitle">مرحلة إغرس</h2>
             <p id="currentPhaseDesc">مرحلة زراعة الأفكار وتطوير المواهب الأولية</p>
@@ -641,24 +542,16 @@
 
         <!-- KPIs -->
         <section aria-label="المؤشرات الرئيسية">
-            <div class="kpi-grid" id="kpiGrid">
-                <!-- تُملأ ديناميكياً -->
-            </div>
+            <div class="kpi-grid" id="kpiGrid"></div>
         </section>
 
-        <!-- Progress -->
-        <section aria-label="نسب الإنجاز">
-            <h2 class="section-title">نسب الإنجاز</h2>
-            <div class="progress-list" id="progressList"></div>
-        </section>
-
-        <!-- Phases -->
+        <!-- تفصيل المراحل -->
         <section aria-label="تفصيل حسب المراحل">
             <h2 class="section-title">تفصيل حسب مراحل المنظومة</h2>
             <div class="phases" id="phases"></div>
         </section>
 
-        <!-- Partners -->
+        <!-- الجهات المشاركة -->
         <section aria-label="الجهات المشاركة" class="partners-section">
             <h2 class="section-title">الجهات المشاركة في المرحلة الحالية</h2>
             <table class="partners-table" id="partnersTable">
@@ -668,9 +561,7 @@
                         <th>الشركات والجهات<br><span class="sub">Companies & Organizations</span></th>
                     </tr>
                 </thead>
-                <tbody id="partnersTableBody">
-                    <!-- تُملأ ديناميكياً -->
-                </tbody>
+                <tbody id="partnersTableBody"></tbody>
             </table>
         </section>
 
@@ -678,7 +569,7 @@
     </div>
 
     <script>
-        // هيكل البيانات للمراحل المختلفة
+        // بيانات المراحل
         const phaseData = {
             "إغرس": {
                 kpis: [
@@ -690,13 +581,6 @@
                     { label: "عدد الجوائز والفعاليات المُقامة", value: 12, icon: "trophy" },
                     { label: "عدد المبادرات ضمن التمكين الحكومي", value: 6, icon: "shield" },
                     { label: "عدد المستخدمين النشطين", value: 850, icon: "user" }
-                ],
-                progress: [
-                    { label: "نسبة تنفيذ مبادرات المواهب", value: 75.2 },
-                    { label: "نسبة تفعيل الحاضنات والمسرّعات", value: 60.8 },
-                    { label: "نسبة صرف التمويل المخطط", value: 45.3 },
-                    { label: "نسبة تحقيق أهداف دعم الشركات الكبرى", value: 80.5 },
-                    { label: "نسبة إنجاز مشاريع البحث والابتكار", value: 35.7 }
                 ],
                 phases: [
                     { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
@@ -719,7 +603,6 @@
                     { category: "القيادة", companies: ["أكاديمية القادة", "برنامج القيادة الشابة"] }
                 ]
             },
-
             "ابدأ": {
                 kpis: [
                     { label: "عدد المواهب المسجّلة/المستفيدة", value: 5800, icon: "people" },
@@ -730,13 +613,6 @@
                     { label: "عدد الجوائز والفعاليات المُقامة", value: 25, icon: "trophy" },
                     { label: "عدد المبادرات ضمن التمكين الحكومي", value: 10, icon: "shield" },
                     { label: "عدد المستخدمين النشطين", value: 1650, icon: "user" }
-                ],
-                progress: [
-                    { label: "نسبة تنفيذ مبادرات المواهب", value: 82.4 },
-                    { label: "نسبة تفعيل الحاضنات والمسرّعات", value: 75.6 },
-                    { label: "نسبة صرف التمويل المخطط", value: 68.9 },
-                    { label: "نسبة تحقيق أهداف دعم الشركات الكبرى", value: 88.2 },
-                    { label: "نسبة إنجاز مشاريع البحث والابتكار", value: 52.1 }
                 ],
                 phases: [
                     { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
@@ -759,7 +635,6 @@
                     { category: "القيادة", companies: ["LeadUp", "معهد القيادة الإدارية"] }
                 ]
             },
-
             "انطلق": {
                 kpis: [
                     { label: "عدد المواهب المسجّلة/المستفيدة", value: 8900, icon: "people" },
@@ -770,13 +645,6 @@
                     { label: "عدد الجوائز والفعاليات المُقامة", value: 38, icon: "trophy" },
                     { label: "عدد المبادرات ضمن التمكين الحكومي", value: 15, icon: "shield" },
                     { label: "عدد المستخدمين النشطين", value: 2450, icon: "user" }
-                ],
-                progress: [
-                    { label: "نسبة تنفيذ مبادرات المواهب", value: 88.7 },
-                    { label: "نسبة تفعيل الحاضنات والمسرّعات", value: 82.3 },
-                    { label: "نسبة صرف التمويل المخطط", value: 76.4 },
-                    { label: "نسبة تحقيق أهداف دعم الشركات الكبرى", value: 92.1 },
-                    { label: "نسبة إنجاز مشاريع البحث والابتكار", value: 68.9 }
                 ],
                 phases: [
                     { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
@@ -799,7 +667,6 @@
                     { category: "القيادة", companies: ["مشروع الريادة", "معهد الإدارة العامة"] }
                 ]
             },
-
             "انمُ": {
                 kpis: [
                     { label: "عدد المواهب المسجّلة/المستفيدة", value: 12840, icon: "people" },
@@ -810,13 +677,6 @@
                     { label: "عدد الجوائز والفعاليات المُقامة", value: 57, icon: "trophy" },
                     { label: "عدد المبادرات ضمن التمكين الحكومي", value: 22, icon: "shield" },
                     { label: "عدد المستخدمين النشطين", value: 3421, icon: "user" }
-                ],
-                progress: [
-                    { label: "نسبة تنفيذ مبادرات المواهب", value: 85.7 },
-                    { label: "نسبة تفعيل الحاضنات والمسرّعات", value: 70.4 },
-                    { label: "نسبة صرف التمويل المخطط", value: 65 },
-                    { label: "نسبة تحقيق أهداف دعم الشركات الكبرى", value: 90 },
-                    { label: "نسبة إنجاز مشاريع البحث والابتكار", value: 39.3 }
                 ],
                 phases: [
                     { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
@@ -841,9 +701,6 @@
             }
         };
 
-        // المرحلة الحالية
-        let currentPhase = "إغرس";
-
         // وصف المراحل
         const phaseDescriptions = {
             "إغرس": "مرحلة زراعة الأفكار وتطوير المواهب الأولية",
@@ -852,69 +709,45 @@
             "انمُ": "مرحلة التوسع والنمو المستدام"
         };
 
-        // دوال SVG للأيقونات
-        function svgWrap(path) {
-            return `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg>`;
-        }
-
-        function svgPeople() {
-            return svgWrap("M17 21v-2a4 4 0 0 0-3-3.87M9 21v-2a4 4 0 0 1 3-3.87M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z");
-        }
-        function svgRocket() {
-            return svgWrap("M9 18V5l12-2-3 10-4 5-1-1-4 1z");
-        }
-        function svgMoney() {
-            return svgWrap("M12 1v22M17 5H9a3 3 0 0 0 0 6h6a3 3 0 0 1 0 6H7");
-        }
-        function svgBuilding() {
-            return svgWrap("M3 21V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v13");
-        }
-        function svgLab() {
-            return svgWrap("M6 22h12M12 2v20");
-        }
-        function svgTrophy() {
-            return svgWrap("M17 21v-2a4 4 0 0 0-3-3.87M9 21v-2a4 4 0 0 1 3-3.87M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z");
-        }
-        function svgShield() {
-            return svgWrap("M12 2L3 7v6c0 5 3 9 9 11 6-2 9-6 9-11V7z");
-        }
-        function svgUser() {
-            return svgWrap("M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z");
-        }
-
-        // خريطة الأيقونات
+        // أيقونات SVG مبسطة
+        function svgWrap(path) { return `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg>`; }
         const iconMap = {
-            people: svgPeople(),
-            rocket: svgRocket(),
-            money: svgMoney(),
-            building: svgBuilding(),
-            lab: svgLab(),
-            trophy: svgTrophy(),
-            shield: svgShield(),
-            user: svgUser()
+            people: svgWrap("M17 21v-2a4 4 0 0 0-3-3.87M9 21v-2a4 4 0 0 1 3-3.87M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"),
+            rocket: svgWrap("M9 18V5l12-2-3 10-4 5-1-1-4 1z"),
+            money: svgWrap("M12 1v22M17 5H9a3 3 0 0 0 0 6h6a3 3 0 0 1 0 6H7"),
+            building: svgWrap("M3 21V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v13"),
+            lab: svgWrap("M6 22h12M12 2v20"),
+            trophy: svgWrap("M17 21v-2a4 4 0 0 0-3-3.87M9 21v-2a4 4 0 0 1 3-3.87M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"),
+            shield: svgWrap("M12 2L3 7v6c0 5 3 9 9 11 6-2 9-6 9-11V7z"),
+            user: svgWrap("M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z")
         };
 
-        // أدوات تنسيق الأرقام
+        // تنسيق الأرقام
         let useArabicIndic = true;
         const fmt = (n) => new Intl.NumberFormat("ar-EG", { maximumFractionDigits: 2 }).format(n);
         const fmtLatin = (n) => new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(n);
 
-        // بناء الواجهة ديناميكيًا
-        function renderKPIs() {
-            const wrap = document.getElementById("kpiGrid");
-            wrap.innerHTML = "";
-            const data = phaseData[currentPhase];
+        // عناصر DOM
+        const kpiGrid = () => document.getElementById("kpiGrid");
+        const phasesBox = () => document.getElementById("phases");
+        const partnersBody = () => document.getElementById("partnersTableBody");
 
-            data.kpis.forEach((k) => {
+        // المرحلة الحالية
+        let currentPhase = "إغرس";
+
+        // بناء KPIs
+        function renderKPIs() {
+            const wrap = kpiGrid(); wrap.innerHTML = "";
+            const data = phaseData[currentPhase];
+            data.kpis.forEach(k => {
                 const isRial = k.suffix === "ر.ع";
-                const suffixHtml = k.suffix && !isRial ? `<span class="suffix">${k.suffix}</span>` : isRial ? `<span class="suffix">ر.ع</span>` : "";
+                const suffixHtml = k.suffix ? `<span class="suffix">${isRial ? "ر.ع" : k.suffix}</span>` : "";
                 const card = document.createElement("div");
                 card.className = "card fade-in";
                 card.setAttribute("role", "group");
                 card.innerHTML = `
           <div class="kpi" aria-label="${k.label}">
-            <div class="icon" aria-hidden="true">${iconMap[k.icon]}</div>
+            <div class="icon" aria-hidden="true">${iconMap[k.icon] || ""}</div>
             <div>
               <h3>${k.label}</h3>
               <div class="value">
@@ -922,45 +755,16 @@
                 ${suffixHtml}
               </div>
             </div>
-          </div>
-        `;
+          </div>`;
                 wrap.appendChild(card);
             });
         }
 
-        function renderProgress() {
-            const list = document.getElementById("progressList");
-            list.innerHTML = "";
-            const data = phaseData[currentPhase];
-
-            data.progress.forEach((p) => {
-                const row = document.createElement("div");
-                row.className = "progress-item fade-in";
-                let barClass = "red";
-                if (p.value >= 70) barClass = "green";
-                else if (p.value >= 40) barClass = "orange";
-                row.innerHTML = `
-          <div class="progress-top">
-            <div class="label">${p.label}</div>
-            <div class="percent" aria-live="polite">${p.value.toFixed(1)}%</div>
-          </div>
-          <div class="bar ${barClass}" aria-hidden="true"><span style="width:0%"></span></div>
-        `;
-                list.appendChild(row);
-                // أجل تحديث العرض بعد الإضافة لتفعيل التحريك
-                requestAnimationFrame(() => {
-                    const span = row.querySelector(".bar > span");
-                    if (span) span.style.width = p.value + "%";
-                });
-            });
-        }
-
+        // بناء بطاقات المراحل
         function renderPhases() {
-            const box = document.getElementById("phases");
-            box.innerHTML = "";
+            const box = phasesBox(); box.innerHTML = "";
             const data = phaseData[currentPhase];
-
-            data.phases.forEach((ph) => {
+            data.phases.forEach(ph => {
                 const el = document.createElement("div");
                 el.className = "phase-card fade-in";
                 el.innerHTML = `
@@ -969,179 +773,129 @@
             <div class="badge">مرحلة</div>
           </div>
           <div class="phase-val"><span class="num" data-target="${ph.value}">0</span></div>
-          <div class="phase-sub">${ph.info}</div>
-        `;
+          <div class="phase-sub">${ph.info}</div>`;
                 box.appendChild(el);
             });
         }
 
+        // بناء جدول الشركاء
         function renderPartners() {
-            const tbody = document.getElementById("partnersTableBody");
-            tbody.innerHTML = "";
+            const tbody = partnersBody(); tbody.innerHTML = "";
             const data = phaseData[currentPhase];
-
-            data.partners.forEach((partner) => {
+            data.partners.forEach(p => {
                 const row = document.createElement("tr");
                 row.className = "fade-in";
                 row.innerHTML = `
-                    <td data-label="الفئة">${partner.category}</td>
-                    <td data-label="الشركات والجهات">${partner.companies.join("، ")}</td>
-                `;
+          <td data-label="الفئة">${p.category}</td>
+          <td data-label="الشركات والجهات">${p.companies.join("، ")}</td>`;
                 tbody.appendChild(row);
             });
         }
 
-        // تحريك العدادات
+        // عدادات متحركة
         function animateCounters() {
-            const nums = document.querySelectorAll(".num");
-            nums.forEach((el) => {
+            document.querySelectorAll(".num").forEach(el => {
                 const target = Number(el.dataset.target);
-                const isCurrency = el.dataset.currency === "true";
-                const duration = 1200; // ms
+                const duration = 1200;
                 const start = performance.now();
-                const decimals = (Math.abs(target % 1) > 0) ? 2 : 0;
 
                 function tick(now) {
-                    const elapsed = now - start;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
                     const current = target * eased;
-
-                    if (useArabicIndic) {
-                        el.textContent = fmt(current);
-                    } else {
-                        el.textContent = fmtLatin(current);
-                    }
-
-                    if (progress < 1) {
-                        requestAnimationFrame(tick);
-                    } else {
-                        // تأكد من القيمة النهائية
-                        if (useArabicIndic) {
-                            el.textContent = fmt(target);
-                        } else {
-                            el.textContent = fmtLatin(target);
-                        }
-                    }
+                    el.textContent = useArabicIndic ? fmt(current) : fmtLatin(current);
+                    if (progress < 1) { requestAnimationFrame(tick); }
+                    else { el.textContent = useArabicIndic ? fmt(target) : fmtLatin(target); }
                 }
                 requestAnimationFrame(tick);
             });
         }
 
-        // تحديث شريط التقدم
+        // شريط التقدم العلوي
         function updateProgressBar() {
             const phases = ["إغرس", "ابدأ", "انطلق", "انمُ"];
             const currentIndex = phases.indexOf(currentPhase);
             const progressBar = document.getElementById("progress");
-            const progressWidth = ((currentIndex + 1) / phases.length) * 100;
-            progressBar.style.width = progressWidth + "%";
+            progressBar.style.width = ((currentIndex + 1) / phases.length) * 100 + "%";
         }
 
-        // تحديث حالة المراحل
+        // تحديث حالات الـ steps
         function updatePhaseSteps() {
             const steps = document.querySelectorAll(".step");
             const phases = ["إغرس", "ابدأ", "انطلق", "انمُ"];
             const currentIndex = phases.indexOf(currentPhase);
-
-            steps.forEach((step, index) => {
+            steps.forEach((step, idx) => {
                 step.classList.remove("active", "completed");
-                if (index === currentIndex) {
-                    step.classList.add("active");
-                } else if (index < currentIndex) {
-                    step.classList.add("completed");
-                }
+                if (idx === currentIndex) step.classList.add("active");
+                else if (idx < currentIndex) step.classList.add("completed");
             });
         }
 
-        // تحديث مؤشر المرحلة الحالية
+        // مؤشر المرحلة الحالية
         function updateCurrentPhaseIndicator() {
             document.getElementById("currentPhaseTitle").textContent = `مرحلة ${currentPhase}`;
             document.getElementById("currentPhaseDesc").textContent = phaseDescriptions[currentPhase];
         }
 
-        // تحديث البيانات للمرحلة الجديدة
+        // تغيير المرحلة بالكامل
         function updatePhaseData(newPhase) {
             if (newPhase === currentPhase) return;
-
-            // إضافة تأثير التحميل
             document.body.classList.add("loading");
-
             setTimeout(() => {
                 currentPhase = newPhase;
                 updateCurrentPhaseIndicator();
                 updatePhaseSteps();
                 updateProgressBar();
                 renderKPIs();
-                renderProgress();
                 renderPhases();
                 renderPartners();
-
-                // إزالة تأثير التحميل وبدء الرسوم المتحركة
                 document.body.classList.remove("loading");
-                setTimeout(() => {
-                    animateCounters();
-                }, 100);
+                setTimeout(() => animateCounters(), 100);
             }, 300);
         }
 
-        // إعداد أحداث النقر على المراحل
+        // إعداد نقرات المراحل
         function setupPhaseClickHandlers() {
-            const steps = document.querySelectorAll(".step");
-            steps.forEach((step) => {
-                step.addEventListener("click", () => {
-                    const phase = step.dataset.phase;
-                    updatePhaseData(phase);
-                });
+            document.querySelectorAll(".step").forEach(step => {
+                step.addEventListener("click", () => updatePhaseData(step.dataset.phase));
             });
         }
 
-        // تبديل شكل الأرقام
+        // تبديل الأرقام
         function toggleNumerals() {
             useArabicIndic = !useArabicIndic;
             animateCounters();
         }
 
         // طباعة
-        function printPage() {
-            window.print();
-        }
+        function printPage() { window.print(); }
 
-        // تحديث التاريخ
+        // تاريخ التحديث
         function updateLastUpdated() {
             const now = new Date();
             const formatted = now.toLocaleDateString("ar-EG", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit"
+                year: "numeric", month: "long", day: "numeric",
+                hour: "2-digit", minute: "2-digit"
             });
             document.getElementById("lastUpdated").textContent = formatted;
         }
 
-        // التهيئة الأولية
+        // تشغيل أولي
         function init() {
             updateLastUpdated();
             updateCurrentPhaseIndicator();
             updatePhaseSteps();
             updateProgressBar();
             renderKPIs();
-            renderProgress();
             renderPhases();
             renderPartners();
             setupPhaseClickHandlers();
+            setTimeout(() => animateCounters(), 500);
 
-            // بدء الرسوم المتحركة بعد تحميل الصفحة
-            setTimeout(() => {
-                animateCounters();
-            }, 500);
-
-            // إعداد أحداث الأزرار
             document.getElementById("toggleNumerals").addEventListener("click", toggleNumerals);
             document.getElementById("print").addEventListener("click", printPage);
         }
 
-        // بدء التطبيق عند تحميل الصفحة
         document.addEventListener("DOMContentLoaded", init);
     </script>
 </body>
