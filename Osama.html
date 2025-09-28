@@ -568,6 +568,25 @@
                 transform: none;
             }
         }
+
+        /* عداد الزوار */
+        .visitor-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(15, 26, 55, 0.9);
+            border: 1px solid #263253;
+            border-radius: 12px;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: var(--muted);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .visitor-counter strong {
+            color: var(--primary);
+        }
     </style>
 </head>
 
@@ -694,7 +713,24 @@
         <footer>النسخة التفاعلية - لوحة منظومة ريادة الأعمال</footer>
     </div>
 
+    <!-- عداد الزوار -->
+    <div class="visitor-counter">
+        عدد الزوار: <strong id="visitorCount">0</strong>
+    </div>
+
     <script>
+        // إدارة عداد الزوار
+        function updateVisitorCounter() {
+            let visitors = localStorage.getItem('dashboardVisitors');
+            if (!visitors) {
+                visitors = 1;
+            } else {
+                visitors = parseInt(visitors) + 1;
+            }
+            localStorage.setItem('dashboardVisitors', visitors);
+            document.getElementById('visitorCount').textContent = visitors.toLocaleString('ar-EG');
+        }
+
         // وصف المراحل
         const phaseDescriptions = {
             "إغرس": "مرحلة زراعة الأفكار وتطوير المواهب الأولية",
@@ -1143,6 +1179,7 @@
 
         // تشغيل أولي
         function init() {
+            updateVisitorCounter(); // تحديث عداد الزوار
             updateLastUpdated();
             updateCurrentPhaseIndicator();
             updatePhaseSteps();
