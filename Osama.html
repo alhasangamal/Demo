@@ -38,19 +38,21 @@
             background: var(--surface);
             color: var(--text);
             line-height: 1.6;
+            transition: opacity 0.5s ease;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 28px 18px 48px;
         }
 
         /* شريط مراحل المنظومة (Stepper) */
         .progress-wrapper {
-            max-width: 900px;
+            max-width: 1300px;
             margin: 18px auto 0;
             padding: 18px 12px;
+            overflow-x: auto;
         }
 
         .progress-container {
@@ -60,6 +62,7 @@
             align-items: center;
             gap: 8px;
             padding: 30px 8px 20px;
+            min-width: 1200px;
         }
 
         .progress-container::before {
@@ -91,12 +94,24 @@
             z-index: 3;
             flex: 1;
             display: flex;
-            flex-direction: column;
+            flex-direction: column-reverse;
             align-items: center;
             cursor: pointer;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             transition: transform 0.2s ease;
+        }
+
+        .step.small-step {
+            flex: 0.8;
+        }
+
+        .step.large-step {
+            flex: 1.2;
+        }
+
+        .step.xlarge-step {
+            flex: 1.4;
         }
 
         .step:hover {
@@ -114,6 +129,26 @@
             font-size: 18px;
             transition: all 220ms ease;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+            margin-top: 8px;
+        }
+
+        .step.small-step .circle {
+            width: 32px;
+            height: 32px;
+            font-size: 0;
+        }
+
+        .step.large-step .circle {
+            width: 50px;
+            height: 50px;
+            font-size: 22px;
+        }
+
+        .step.xlarge-step .circle {
+            width: 65px;
+            height: 65px;
+            font-size: 28px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .step.completed .circle {
@@ -126,11 +161,37 @@
             box-shadow: 0 0 20px var(--primary);
         }
 
+        .step.large-step.active .circle {
+            transform: scale(1.15);
+            box-shadow: 0 0 25px var(--primary);
+        }
+
+        .step.xlarge-step.active .circle {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px var(--primary);
+        }
+
         .label {
-            margin-top: 8px;
             font-size: 14px;
             opacity: .95;
             font-weight: 600;
+            text-align: center;
+            line-height: 2.3;
+        }
+
+        .step.small-step .label {
+            font-size: 12px;
+        }
+
+        .step.large-step .label {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .step.xlarge-step .label {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
         }
 
         .step.active .label {
@@ -138,15 +199,117 @@
             font-weight: 800;
         }
 
-        @media (max-width:560px) {
+        @media (max-width:1200px) {
+            .container {
+                max-width: 100%;
+                padding: 20px 15px 40px;
+            }
+
+            .progress-wrapper {
+                max-width: 100%;
+            }
+
+            .progress-container {
+                min-width: 1000px;
+            }
+        }
+
+        @media (max-width:768px) {
             .circle {
                 width: 34px;
                 height: 34px;
                 font-size: 16px;
             }
 
+            .step.small-step .circle {
+                width: 28px;
+                height: 28px;
+            }
+
+            .step.large-step .circle {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .step.xlarge-step .circle {
+                width: 50px;
+                height: 50px;
+                font-size: 22px;
+            }
+
             .progress-container {
                 padding: 24px 6px 18px;
+                min-width: 800px;
+            }
+
+            .label {
+                font-size: 12px;
+            }
+
+            .step.small-step .label {
+                font-size: 10px;
+            }
+
+            .step.large-step .label {
+                font-size: 14px;
+            }
+
+            .step.xlarge-step .label {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width:480px) {
+            .container {
+                padding: 15px 10px 30px;
+            }
+
+            header {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .title {
+                justify-content: center;
+            }
+
+            .toolbar {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .domains-buttons {
+                flex-direction: column;
+            }
+
+            .domain-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .support-table {
+                font-size: 13px;
+            }
+
+            .support-table th,
+            .support-table td {
+                padding: 8px 10px;
+            }
+
+            .progress-container {
+                min-width: 700px;
+            }
+
+            .step.xlarge-step .circle {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+
+            .step.xlarge-step .label {
+                font-size: 14px;
             }
         }
 
@@ -210,256 +373,173 @@
         /* مؤشر المرحلة الحالية */
         .current-phase {
             text-align: center;
-            margin: 20px 0;
-            padding: 15px;
+            margin: 20px 0 40px;
+            padding: 20px;
             background: linear-gradient(135deg, var(--primary-weak), rgba(0, 209, 178, .1));
             border-radius: var(--radius-lg);
             border: 1px solid var(--primary);
+            box-shadow: var(--shadow);
         }
 
         .current-phase h2 {
             margin: 0;
             color: var(--primary);
-            font-size: 24px;
-            font-weight: 800;
-        }
-
-        .current-phase p {
-            margin: 5px 0 0;
-            color: var(--muted);
-            font-size: 14px;
-        }
-
-        /* شبكة مؤشرات KPI */
-        .kpi-grid {
-            display: grid;
-            gap: 16px;
-            grid-template-columns: repeat(4, 1fr);
-        }
-
-        @media (max-width:1100px) {
-            .kpi-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width:820px) {
-            .kpi-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width:520px) {
-            .kpi-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
-            position: relative;
-            background: linear-gradient(180deg, #0f1833 0%, #0d1429 100%);
-            border: 1px solid #1d2a4d;
-            border-radius: var(--radius-lg);
-            padding: 16px 16px 18px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            transition: transform .3s ease, box-shadow .3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, .4);
-        }
-
-        .kpi {
-            display: grid;
-            grid-template-columns: 50px 1fr;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .kpi .icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #0f1a37;
-            border: 1px solid #263253;
-        }
-
-        .kpi h3 {
-            margin: 0 0 4px;
-            font-size: 15px;
-            color: var(--muted);
-            font-weight: 500;
-        }
-
-        .kpi .value {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: .4px;
-        }
-
-        .kpi .suffix {
-            font-size: 14px;
-            color: var(--muted);
-            margin-inline-start: 6px;
-            font-weight: 600;
-        }
-
-        /* أقسام المراحل */
-        .phases {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
-
-        @media (max-width:900px) {
-            .phases {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width:520px) {
-            .phases {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .phase-card {
-            padding: 16px;
-            border-radius: var(--radius-lg);
-            background: linear-gradient(180deg, #0e1530 0%, #0d1429 100%);
-            border: 1px solid #1d2a4d;
-            box-shadow: var(--shadow);
-            transition: transform .2s ease, border-color .2s ease;
-        }
-
-        .phase-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--primary);
-        }
-
-        .phase-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .phase-name {
-            font-weight: 800;
-            letter-spacing: .3px;
-        }
-
-        .badge {
-            font-size: 12px;
-            color: #001b14;
-            background: var(--primary);
-            padding: 4px 8px;
-            border-radius: 999px;
-            font-weight: 800;
-        }
-
-        .phase-val {
             font-size: 28px;
             font-weight: 800;
         }
 
-        .phase-sub {
+        .current-phase p {
+            margin: 10px 0 0;
             color: var(--muted);
-            font-size: 14px;
+            font-size: 16px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* جدول الجهات المشاركة */
-        .partners-section {
+        /* مجالات الدعم كأزرار */
+        .domains-section {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .domains-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .domain-btn {
+            background: #0f1a37;
+            border: 1px solid #263253;
+            color: var(--text);
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .domain-btn:hover {
+            transform: translateY(-2px);
+            border-color: #37508d;
+        }
+
+        .domain-btn.active {
+            background: var(--primary-weak);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-weak);
+        }
+
+        /* شريط البحث */
+        .search-container {
+            margin: 20px 0;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #263253;
+            background: #0f1a37;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-weak);
+        }
+
+        .search-input::placeholder {
+            color: var(--muted);
+        }
+
+        /* جدول الجهات الداعمة */
+        .support-table-container {
+            background: linear-gradient(180deg, #0f1833 0%, #0d1429 100%);
+            border: 1px solid #1d2a4d;
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            box-shadow: var(--shadow);
             margin-top: 20px;
         }
 
-        .partners-table {
+        .support-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 16px;
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow);
+            font-size: 15px;
         }
 
-        .partners-table th,
-        .partners-table td {
+        .support-table th {
+            background: rgba(0, 209, 178, 0.1);
+            padding: 12px 15px;
+            text-align: right;
             border: 1px solid #1d2a4d;
-            padding: 12px;
-            text-align: center;
-            vertical-align: middle;
-            color: var(--text);
+            font-weight: 700;
+            color: var(--primary);
         }
 
-        .partners-table th {
-            background: var(--primary-weak);
-            font-weight: 800;
-            font-size: 14px;
+        .support-table td {
+            padding: 12px 15px;
+            border: 1px solid #1d2a4d;
+            text-align: right;
         }
 
-        .partners-table .sub {
+        .support-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .support-table tr:hover {
+            background: rgba(0, 209, 178, 0.05);
+        }
+
+        .entity-link {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .entity-link:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .entity-link::after {
+            content: "🔗";
             font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .no-data {
+            text-align: center;
             color: var(--muted);
-        }
-
-        .partners-table td {
-            background: var(--card);
-            font-size: 13px;
-        }
-
-        .partners-table tr:hover td {
-            background: rgba(0, 209, 178, .05);
-        }
-
-        /* Responsive table */
-        @media (max-width:768px) {
-
-            .partners-table,
-            .partners-table thead,
-            .partners-table tbody,
-            .partners-table th,
-            .partners-table td,
-            .partners-table tr {
-                display: block;
-                width: 100%;
-            }
-
-            .partners-table thead {
-                display: none;
-            }
-
-            .partners-table tr {
-                margin-bottom: 10px;
-                background: var(--card);
-                border-radius: var(--radius-lg);
-                padding: 10px;
-            }
-
-            .partners-table td {
-                text-align: right;
-                padding-right: 50%;
-                position: relative;
-                border: none;
-                border-bottom: 1px solid #1d2a4d;
-            }
-
-            .partners-table td::before {
-                content: attr(data-label);
-                position: absolute;
-                right: 10px;
-                font-weight: bold;
-                color: var(--muted);
-            }
+            padding: 40px;
+            font-size: 16px;
         }
 
         footer {
-            margin-top: 28px;
+            margin-top: 40px;
             color: var(--muted);
             font-size: 12px;
             text-align: center;
@@ -502,7 +582,6 @@
                 </div>
             </div>
             <div class="toolbar">
-                <button class="button" id="toggleNumerals" title="تبديل شكل الأرقام">تحويل الأرقام</button>
                 <button class="button" id="print">طباعة / PDF</button>
             </div>
         </header>
@@ -512,24 +591,64 @@
             <div class="progress-container" id="container" role="list" aria-label="خط المراحل">
                 <div class="progress" id="progress" aria-hidden="true"></div>
 
-                <div class="step active" role="listitem" data-phase="إغرس">
-                    <div class="circle" aria-hidden="true">🌱</div>
+                <div class="step xlarge-step active" role="listitem" data-phase="إغرس">
                     <div class="label">إغرس</div>
+                    <div class="circle" aria-hidden="true">1</div>
                 </div>
 
-                <div class="step" role="listitem" data-phase="ابدأ">
-                    <div class="circle" aria-hidden="true">🚀</div>
+                <div class="step small-step" role="listitem" data-phase="توليد الفكرة">
+                    <div class="label">توليد الفكرة</div>
+                    <div class="circle" aria-hidden="true"></div>
+                </div>
+
+                <div class="step small-step" role="listitem" data-phase="البحث السوقي">
+                    <div class="label">البحث السوقي</div>
+                    <div class="circle" aria-hidden="true"></div>
+                </div>
+
+                <div class="step xlarge-step" role="listitem" data-phase="ابدأ">
                     <div class="label">ابدأ</div>
+                    <div class="circle" aria-hidden="true">2</div>
                 </div>
 
-                <div class="step" role="listitem" data-phase="انطلق">
-                    <div class="circle" aria-hidden="true">⚡</div>
+                <div class="step small-step" role="listitem" data-phase="التخطيط التجاري">
+                    <div class="label">التخطيط التجاري</div>
+                    <div class="circle" aria-hidden="true"></div>
+                </div>
+
+                <div class="step small-step" role="listitem" data-phase="التمويل وتأمين الموارد">
+                    <div class="label">التمويل وتأمين الموارد</div>
+                    <div class="circle" aria-hidden="true"></div>
+                </div>
+
+                <div class="step xlarge-step" role="listitem" data-phase="انطلق">
                     <div class="label">انطلق</div>
+                    <div class="circle" aria-hidden="true">3</div>
                 </div>
 
-                <div class="step" role="listitem" data-phase="انمُ">
-                    <div class="circle" aria-hidden="true">🌳</div>
+                <div class="step small-step" role="listitem" data-phase="تطوير المنتج أو الخدمة">
+                    <div class="label">تطوير المنتج أو الخدمة</div>
+                    <div class="circle" aria-hidden="true"></div>
+                </div>
+
+                <div class="step small-step" role="listitem" data-phase="الإطلاق ودخول السوق">
+                    <div class="label">الإطلاق ودخول السوق</div>
+                    <div class="circle" aria-hidden="true"></div>
+                </div>
+
+                <div class="step xlarge-step" role="listitem" data-phase="انمُ">
                     <div class="label">انمُ</div>
+                    <div class="circle" aria-hidden="true">4</div>
+                </div>
+
+                <div class="step small-step" role="listitem" data-phase="النمو والتوسع">
+                    <div class="label">النمو والتوسع</div>
+                    <div class="circle" aria-hidden="true"></div>
+                </div>
+
+                <div class="step small-step" role="listitem" data-phase="الاستدامة والابتكار">
+                    <div class="label">الاستدامة والابتكار</div>
+                    <div class="circle" aria-hidden="true"></div>
                 </div>
             </div>
         </div>
@@ -540,280 +659,364 @@
             <p id="currentPhaseDesc">مرحلة زراعة الأفكار وتطوير المواهب الأولية</p>
         </div>
 
-        <!-- KPIs -->
-        <section aria-label="المؤشرات الرئيسية">
-            <div class="kpi-grid" id="kpiGrid"></div>
-        </section>
+        <!-- مجالات الدعم -->
+        <section class="domains-section" aria-label="مجالات الدعم">
+            <h2 class="section-title">مجالات الدعم في مرحلة <span id="currentPhaseForDomains">إغرس</span></h2>
 
-        <!-- تفصيل المراحل -->
-        <section aria-label="تفصيل حسب المراحل">
-            <h2 class="section-title">تفصيل حسب مراحل المنظومة</h2>
-            <div class="phases" id="phases"></div>
-        </section>
+            <!-- أزرار المجالات -->
+            <div class="domains-buttons" id="domainsButtons"></div>
 
-        <!-- الجهات المشاركة -->
-        <section aria-label="الجهات المشاركة" class="partners-section">
-            <h2 class="section-title">الجهات المشاركة في المرحلة الحالية</h2>
-            <table class="partners-table" id="partnersTable">
-                <thead>
-                    <tr>
-                        <th>الفئة<br><span class="sub">Category</span></th>
-                        <th>الشركات والجهات<br><span class="sub">Companies & Organizations</span></th>
-                    </tr>
-                </thead>
-                <tbody id="partnersTableBody"></tbody>
-            </table>
+            <!-- شريط البحث -->
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="ابحث في الجهات الداعمة أو كيفية الاستفادة...">
+            </div>
+
+            <!-- جدول الجهات الداعمة -->
+            <div class="support-table-container">
+                <table class="support-table" id="supportTable">
+                    <thead>
+                        <tr>
+                            <th>الجهة الداعمة</th>
+                            <th>كيفية الاستفادة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="supportTableBody">
+                        <!-- سيتم ملؤه بالبيانات -->
+                    </tbody>
+                </table>
+                <div id="noDataMessage" class="no-data" style="display: none;">
+                    اختر مجالاً لعرض الجهات الداعمة
+                </div>
+            </div>
         </section>
 
         <footer>النسخة التفاعلية - لوحة منظومة ريادة الأعمال</footer>
     </div>
 
     <script>
-        // بيانات المراحل
-        const phaseData = {
+        // وصف المراحل
+        const phaseDescriptions = {
+            "إغرس": "مرحلة زراعة الأفكار وتطوير المواهب الأولية",
+            "توليد الفكرة": "مرحلة توليد الأفكار الإبداعية والمبتكرة",
+            "البحث السوقي": "مرحلة دراسة السوق وتحليل الجدوى",
+            "ابدأ": "مرحلة بدء المشاريع والحصول على التمويل الأولي",
+            "التخطيط التجاري": "مرحلة وضع الخطط التجارية والاستراتيجيات",
+            "التمويل وتأمين الموارد": "مرحلة البحث عن التمويل وتأمين الموارد اللازمة",
+            "انطلق": "مرحلة دخول السوق وتسريع النمو",
+            "تطوير المنتج أو الخدمة": "مرحلة تطوير وتحسين المنتج أو الخدمة المقدمة",
+            "الإطلاق ودخول السوق": "مرحلة الإطلاق الرسمي ودخول السوق المستهدف",
+            "انمُ": "مرحلة التوسع والنمو المستدام",
+            "النمو والتوسع": "مرحلة التوسع الجغرافي وتنمية الحصة السوقية",
+            "الاستدامة والابتكار": "مرحلة تحقيق الاستدامة والابتكار المستمر"
+        };
+
+        // بيانات مجالات الدعم لكل مرحلة - مكتملة مع الروابط
+        const phaseDomainsData = {
             "إغرس": {
-                kpis: [
-                    { label: "عدد المواهب المسجّلة/المستفيدة", value: 3200, icon: "people" },
-                    { label: "عدد الحاضنات والمسرّعات", value: 8, icon: "rocket" },
-                    { label: "إجمالي التمويل المقدم", value: 2500000, suffix: "ر.ع", icon: "money" },
-                    { label: "عدد الشركات الكبرى الداعمة", value: 5, icon: "building" },
-                    { label: "عدد مشاريع البحث والابتكار", value: 15, icon: "lab" },
-                    { label: "عدد الجوائز والفعاليات المُقامة", value: 12, icon: "trophy" },
-                    { label: "عدد المبادرات ضمن التمكين الحكومي", value: 6, icon: "shield" },
-                    { label: "عدد المستخدمين النشطين", value: 850, icon: "user" }
+                "التمويل": [
+                    { entity: "صندوق دعم الأفكار الإبداعية", support: "منح صغيرة لدعم الأفكار المبتكرة في مراحلها الأولى", link: "https://example.com/innovation-fund" },
+                    { entity: "برنامج حاضنات الأعمال", support: "تمويل أولي للأفكار الواعدة مع توفير مساحة عمل", link: "https://example.com/business-incubators" }
                 ],
-                phases: [
-                    { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
-                    { name: "ابدأ", info: "عدد الشركات الممولة مبدئيًا", value: 0 },
-                    { name: "انطلق", info: "عدد الشركات التي دخلت السوق", value: 0 },
-                    { name: "انمُ", info: "عدد الشركات المتوسعة/المستدامة", value: 0 }
+                "الثقافة": [
+                    { entity: "مراكز الإبداع بالجامعات", support: "ورش عمل ومسابقات للأفكار الريادية", link: "https://example.com/innovation-centers" },
+                    { entity: "نادي الرواد", support: "تسليط الضوء على نماذج ناجحة محلياً", link: "https://example.com/entrepreneurs-club" },
+                    { entity: "المجتمع المدني", support: "تشجيع ثقافة الابتكار والمبادرة", link: "https://example.com/civil-society" }
                 ],
-                partners: [
-                    { category: "المواهب", companies: ["إنجاز عمان", "أكاديمية المبدعين", "مركز تطوير المهارات"] },
-                    { category: "الحاضنات والمسرّعات", companies: ["Incubation Hub", "مركز الإبداع الأولي"] },
-                    { category: "التمويل", companies: ["صندوق الأفكار", "مبادرة التمويل الأولي"] },
-                    { category: "دعم الشركات الكبرى", companies: ["مؤسسة الدعم المبكر"] },
-                    { category: "الابتكار والبحث والتطوير", companies: ["UK Oman Hub", "مركز البحوث التطبيقية"] },
-                    { category: "الجوائز والفعاليات", companies: ["Awards Org", "مهرجان الأفكار"] },
-                    { category: "التمكين الحكومي", companies: ["Gov Empowerment", "مبادرة الحكومة الرقمية"] },
-                    { category: "التعليم", companies: ["وزارة التربية والتعليم", "المعهد التقني"] },
-                    { category: "الابتكار", companies: ["جمعية المبتكرين", "مختبر الأفكار"] },
-                    { category: "ريادة الأعمال", companies: ["مبادرة شبابنا", "نادي رواد الأعمال"] },
-                    { category: "التقنية", companies: ["مؤسسة الإبداع", "مركز التقنيات الناشئة"] },
-                    { category: "القيادة", companies: ["أكاديمية القادة", "برنامج القيادة الشابة"] }
+                "الدعم": [
+                    { entity: "مركز الأعمال", support: "استشارات مجانية وتوجيه مهني", link: "https://example.com/business-center" },
+                    { entity: "شبكة المرشدين", support: "توفير مرشدين متطوعين من ذوي الخبرة", link: "https://example.com/mentors-network" }
+                ],
+                "رأس المال البشري": [
+                    { entity: "جامعة السلطان قابوس", support: "برامج تدريبية في ريادة الأعمال", link: "https://www.squ.edu.om" },
+                    { entity: "المعهد التقني", support: "تأهيل كوادر في مجالات تقنية", link: "https://example.com/technical-institute" }
+                ],
+                "الأسواق": [
+                    { entity: "هيئة تنمية المشاريع", support: "دراسات جدوى أولية للسوق المحلي", link: "https://example.com/projects-development" },
+                    { entity: "غرفة التجارة", support: "ربط الأفكار باحتياجات السوق", link: "https://www.chamberoman.om" }
+                ],
+                "السياسات": [
+                    { entity: "وزارة التعليم العالي", support: "سياسات تشجيع البحث العلمي والابتكار", link: "https://www.mohe.gov.om" },
+                    { entity: "هيئة تنمية المؤسسات الصغيرة", support: "تسهيلات للتسجيل والترخيص", link: "https://www.riyada.om" }
+                ],
+                "التقنية": [
+                    { entity: "هيئة تقنية المعلومات", support: "توفير بنية تحتية رقمية", link: "https://www.ita.gov.om" },
+                    { entity: "مركز الابتكار", support: "توفير مختبرات وأدوات تقنية", link: "https://example.com/innovation-lab" }
+                ]
+            },
+            "توليد الفكرة": {
+                "التمويل": [
+                    { entity: "مسابقات ريادة الأعمال", support: "تقديم جوائز مالية صغيرة كحافز لتحويل الأفكار إلى مشاريع أولية.", link: "https://example.com/competitions" }
+                ],
+                "الثقافة": [
+                    { entity: "هيئة تنمية المؤسسات الصغيرة والمتوسطة", support: "تنظيم مسابقات وجوائز، نشر قصص نجاح رواد أعمال عُمانيين", link: "https://www.riyada.om" },
+                    { entity: "نادي الرواد", support: "تسليط الضوء على نماذج ناجحة محلياً", link: "https://example.com/entrepreneurs-club" },
+                    { entity: "المجتمع المدني", support: "تشجيع ثقافة الابتكار والمبادرة", link: "https://example.com/civil-society" }
+                ],
+                "الدعم": [
+                    { entity: "مركز الأعمال", support: "استشارات مجانية وتوجيه مهني", link: "https://example.com/business-center" },
+                    { entity: "شبكة المرشدين", support: "توفير مرشدين متطوعين من ذوي الخبرة", link: "https://example.com/mentors-network" },
+                    { entity: "منصة إلكترونية", support: "دعم عن بعد عبر منصة متخصصة", link: "https://example.com/digital-platform" }
+                ],
+                "رأس المال البشري": [
+                    { entity: "جامعة السلطان قابوس", support: "برامج تدريبية في ريادة الأعمال", link: "https://www.squ.edu.om" },
+                    { entity: "المعهد التقني", support: "تأهيل كوادر في مجالات تقنية", link: "https://example.com/technical-institute" },
+                    { entity: "مركز التدريب", support: "تدريبات عملية على إدارة المشاريع", link: "https://example.com/training-center" }
+                ],
+                "الأسواق": [
+                    { entity: "هيئة تنمية المشاريع", support: "دراسات جدوى أولية للسوق المحلي", link: "https://example.com/projects-development" },
+                    { entity: "غرفة التجارة", support: "ربط الأفكار باحتياجات السوق", link: "https://www.chamberoman.om" },
+                    { entity: "منصة إلكترونية", support: "عرض الأفكار على مستثمرين محتملين", link: "https://example.com/investors-platform" }
+                ],
+                "السياسات": [
+                    { entity: "وزارة التعليم العالي والبحث العلمي والابتكار", support: "سياسات تشجيع البحث العلمي والابتكار في الجامعات", link: "https://www.mohe.gov.om" }
+                ],
+                "التقنية": [
+                    { entity: "هيئة تقنية المعلومات", support: "توفير بنية تحتية رقمية", link: "https://www.ita.gov.om" },
+                    { entity: "مركز الابتكار", support: "توفير مختبرات وأدوات تقنية", link: "https://example.com/innovation-lab" },
+                    { entity: "شركات التقنية", support: "دعم تقني واستشارات متخصصة", link: "https://example.com/tech-companies" }
+                ]
+            },
+            "البحث السوقي": {
+                "الأسواق": [
+                    { entity: "مركز الدراسات السوقية", support: "توفير بيانات ومعلومات عن السوق المحلي", link: "https://example.com/market-research" },
+                    { entity: "غرفة التجارة والصناعة", support: "تقارير عن القطاعات الاقتصادية الواعدة", link: "https://www.chamberoman.om" }
+                ],
+                "الدعم": [
+                    { entity: "مراكز الاستشارات", support: "استشارات في أبحاث السوق والجدوى", link: "https://example.com/consulting-centers" },
+                    { entity: "خبراء الصناعة", support: "توجيه من متخصصين في القطاعات المختلفة", link: "https://example.com/industry-experts" }
                 ]
             },
             "ابدأ": {
-                kpis: [
-                    { label: "عدد المواهب المسجّلة/المستفيدة", value: 5800, icon: "people" },
-                    { label: "عدد الحاضنات والمسرّعات", value: 18, icon: "rocket" },
-                    { label: "إجمالي التمويل المقدم", value: 8200000, suffix: "ر.ع", icon: "money" },
-                    { label: "عدد الشركات الكبرى الداعمة", value: 12, icon: "building" },
-                    { label: "عدد مشاريع البحث والابتكار", value: 35, icon: "lab" },
-                    { label: "عدد الجوائز والفعاليات المُقامة", value: 25, icon: "trophy" },
-                    { label: "عدد المبادرات ضمن التمكين الحكومي", value: 10, icon: "shield" },
-                    { label: "عدد المستخدمين النشطين", value: 1650, icon: "user" }
+                "التمويل": [
+                    { entity: "صندوق رأس المال الجريء", support: "استثمارات تصل إلى 500,000 ر.ع", link: "https://example.com/venture-capital" },
+                    { entity: "بنوك محلية", support: "قروض متوسطة الأجل بضمانات مخففة", link: "https://example.com/local-banks" },
+                    { entity: "مستثمرون أفراد", support: "تمويل مقابل حصص في الشركة", link: "https://example.com/angel-investors" }
                 ],
-                phases: [
-                    { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
-                    { name: "ابدأ", info: "عدد الشركات الممولة مبدئيًا", value: 180 },
-                    { name: "انطلق", info: "عدد الشركات التي دخلت السوق", value: 0 },
-                    { name: "انمُ", info: "عدد الشركات المتوسعة/المستدامة", value: 0 }
+                "الثقافة": [
+                    { entity: "مراكز الإبداع", support: "تعزيز ثقافة المخاطرة المحسوبة", link: "https://example.com/innovation-hubs" },
+                    { entity: "وسائل الإعلام", support: "تغطية إعلامية للشركات الناشئة", link: "https://example.com/media-coverage" }
                 ],
-                partners: [
-                    { category: "المواهب", companies: ["الرفد", "مركز تطوير المواهب", "أكاديمية الإبداع"] },
-                    { category: "الحاضنات والمسرّعات", companies: ["عمانتل", "حاضنة الأعمال الوطنية", "مسرعة الابتكار"] },
-                    { category: "التمويل", companies: ["FundStart", "صندوق رأس المال الجريء", "بنك التنمية"] },
-                    { category: "دعم الشركات الكبرى", companies: ["Oman LNG", "شركة النفط العمانية", "مجموعة سهيل"] },
-                    { category: "الابتكار والبحث والتطوير", companies: ["Innovation Factory", "مركز البحوث المتقدمة"] },
-                    { category: "الجوائز والفعاليات", companies: ["أسبوع ريادة الأعمال", "مؤتمر الابتكار"] },
-                    { category: "التمكين الحكومي", companies: ["وزارة الاقتصاد", "هيئة المناطق الاقتصادية"] },
-                    { category: "التعليم", companies: ["كلية التقنية", "جامعة السلطان قابوس"] },
-                    { category: "الابتكار", companies: ["Startup Oman", "مركز الابتكار التقني"] },
-                    { category: "ريادة الأعمال", companies: ["IncubateMe", "شبكة رواد الأعمال"] },
-                    { category: "التقنية", companies: ["حاضنة الأعمال الوطنية", "مركز التقنيات المالية"] },
-                    { category: "القيادة", companies: ["LeadUp", "معهد القيادة الإدارية"] }
+                "الدعم": [
+                    { entity: "محامون متطوعون", support: "استشارات قانونية مجانية", link: "https://example.com/legal-support" },
+                    { entity: "محاسبون معتمدون", support: "مراجعة حسابات وتقديم استشارات مالية", link: "https://example.com/accounting-support" }
+                ]
+            },
+            "التخطيط التجاري": {
+                "الدعم": [
+                    { entity: "مراكز تطوير الأعمال", support: "مساعدة في إعداد خطط العمل", link: "https://example.com/business-development" },
+                    { entity: "مستشارون أعمال", support: "استشارات في التخطيط الاستراتيجي", link: "https://example.com/business-consultants" }
+                ],
+                "رأس المال البشري": [
+                    { entity: "معاهد التدريب", support: "دورات في إدارة الأعمال والتخطيط", link: "https://example.com/training-institutes" }
+                ]
+            },
+            "التمويل وتأمين الموارد": {
+                "التمويل": [
+                    { entity: "صناديق التمويل المتوسطة", support: "قروض ميسرة للمشاريع الصغيرة", link: "https://example.com/funding-funds" },
+                    { entity: "شركات التمويل", support: "تمويل للأصول والمعدات", link: "https://example.com/finance-companies" }
+                ],
+                "الدعم": [
+                    { entity: "مكاتب التسجيل", support: "تسهيل إجراءات التسجيل والتراخيص", link: "https://example.com/registration-offices" }
                 ]
             },
             "انطلق": {
-                kpis: [
-                    { label: "عدد المواهب المسجّلة/المستفيدة", value: 8900, icon: "people" },
-                    { label: "عدد الحاضنات والمسرّعات", value: 28, icon: "rocket" },
-                    { label: "إجمالي التمويل المقدم", value: 12800000, suffix: "ر.ع", icon: "money" },
-                    { label: "عدد الشركات الكبرى الداعمة", value: 20, icon: "building" },
-                    { label: "عدد مشاريع البحث والابتكار", value: 58, icon: "lab" },
-                    { label: "عدد الجوائز والفعاليات المُقامة", value: 38, icon: "trophy" },
-                    { label: "عدد المبادرات ضمن التمكين الحكومي", value: 15, icon: "shield" },
-                    { label: "عدد المستخدمين النشطين", value: 2450, icon: "user" }
+                "التمويل": [
+                    { entity: "صناديق الاستثمار", support: "تمويل للتوسع وزيادة الحصة السوقية", link: "https://example.com/investment-funds" },
+                    { entity: "الأسواق المالية", support: "إعداد للاكتتاب العام", link: "https://example.com/financial-markets" }
                 ],
-                phases: [
-                    { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
-                    { name: "ابدأ", info: "عدد الشركات الممولة مبدئيًا", value: 180 },
-                    { name: "انطلق", info: "عدد الشركات التي دخلت السوق", value: 120 },
-                    { name: "انمُ", info: "عدد الشركات المتوسعة/المستدامة", value: 0 }
-                ],
-                partners: [
-                    { category: "المواهب", companies: ["PowerUp Org", "مركز تسريع المواهب", "أكاديمية التميز"] },
-                    { category: "الحاضنات والمسرّعات", companies: ["Accelerator", "مسرعة النمو", "PowerUp Hub"] },
-                    { category: "التمويل", companies: ["Namou", "صندوق الاستثمار المباشر", "مجموعة الاستثمار"] },
-                    { category: "دعم الشركات الكبرى", companies: ["Corporate Support", "مجموعة أوربك", "شركة تنمية نفط عمان"] },
-                    { category: "الابتكار والبحث والتطوير", companies: ["Industrial Innovation Academy", "مركز الابتكار الصناعي"] },
-                    { category: "الجوائز والفعاليات", companies: ["GrowEvents", "معرض التقنيات الناشئة"] },
-                    { category: "التمكين الحكومي", companies: ["Gov Support", "مجلس البحث العلمي"] },
-                    { category: "التعليم", companies: ["TechUp Accelerator", "الجامعة الألمانية للتكنولوجيا"] },
-                    { category: "الابتكار", companies: ["مسرعة النمو", "مركز الابتكار المفتوح"] },
-                    { category: "ريادة الأعمال", companies: ["Launch Hub", "شبكة المستثمرين الملائكة"] },
-                    { category: "التقنية", companies: ["Venture Plus", "مركز التقنيات المتقدمة"] },
-                    { category: "القيادة", companies: ["مشروع الريادة", "معهد الإدارة العامة"] }
+                "الأسواق": [
+                    { entity: "وكالات التسويق", support: "حملات تسويقية متكاملة", link: "https://example.com/marketing-agencies" },
+                    { entity: "منصات التجارة الإلكترونية", support: "توسيع نطاق الوصول للعملاء", link: "https://example.com/ecommerce-platforms" }
+                ]
+            },
+            "تطوير المنتج أو الخدمة": {
+                "التقنية": [
+                    { entity: "مراكز البحث والتطوير", support: "دعم تقني لتطوير المنتجات", link: "https://example.com/rnd-centers" },
+                    { entity: "مختبرات الجودة", support: "اختبارات وضمان الجودة", link: "https://example.com/quality-labs" }
+                ]
+            },
+            "الإطلاق ودخول السوق": {
+                "الأسواق": [
+                    { entity: "معارض ومنصات تسويقية", support: "عرض المنتجات في منصات متخصصة", link: "https://example.com/exhibitions" },
+                    { entity: "برامج التسويق الرقمي", support: "حملات إعلانية مدعومة", link: "https://example.com/digital-marketing" }
                 ]
             },
             "انمُ": {
-                kpis: [
-                    { label: "عدد المواهب المسجّلة/المستفيدة", value: 12840, icon: "people" },
-                    { label: "عدد الحاضنات والمسرّعات", value: 42, icon: "rocket" },
-                    { label: "إجمالي التمويل المقدم", value: 18750000.55, suffix: "ر.ع", icon: "money" },
-                    { label: "عدد الشركات الكبرى الداعمة", value: 31, icon: "building" },
-                    { label: "عدد مشاريع البحث والابتكار", value: 96, icon: "lab" },
-                    { label: "عدد الجوائز والفعاليات المُقامة", value: 57, icon: "trophy" },
-                    { label: "عدد المبادرات ضمن التمكين الحكومي", value: 22, icon: "shield" },
-                    { label: "عدد المستخدمين النشطين", value: 3421, icon: "user" }
+                "التمويل": [
+                    { entity: "صناديق الاستثمار الدولية", support: "تمويل للتوسع الإقليمي والعالمي", link: "https://example.com/international-funds" },
+                    { entity: "الاندماج والاستحواذ", support: "دعم عمليات النمو عبر الاستحواذ", link: "https://example.com/mergers-acquisitions" }
                 ],
-                phases: [
-                    { name: "إِغرِس", info: "عدد الأفكار/المشاريع الناشئة", value: 420 },
-                    { name: "ابدأ", info: "عدد الشركات الممولة مبدئيًا", value: 180 },
-                    { name: "انطلق", info: "عدد الشركات التي دخلت السوق", value: 120 },
-                    { name: "انمُ", info: "عدد الشركات المتوسعة/المستدامة", value: 75 }
+                "الاستدامة": [
+                    { entity: "مركز الاستدامة", support: "تطبيق معايير الاستدامة في العمليات", link: "https://example.com/sustainability-center" },
+                    { entity: "شهادات الجودة", support: "الحصول على شهادات معترف بها عالمياً", link: "https://example.com/quality-certifications" }
+                ]
+            },
+            "النمو والتوسع": {
+                "الأسواق": [
+                    { entity: "مكاتب التمثيل التجاري", support: "دعم الدخول إلى الأسواق الدولية", link: "https://example.com/trade-offices" },
+                    { entity: "شركات الشحن والتوزيع", support: "شبكات توزيع محلية ودولية", link: "https://example.com/shipping-companies" }
+                ]
+            },
+            "الاستدامة والابتكار": {
+                "التقنية": [
+                    { entity: "مراكز الابتكار", support: "دعم البحث والتطوير المستمر", link: "https://example.com/innovation-centers" },
+                    { entity: "شركات التقنية المتقدمة", support: "شراكات استراتيجية للتطوير", link: "https://example.com/advanced-tech" }
                 ],
-                partners: [
-                    { category: "المواهب", companies: ["مركز التميز المتقدم", "أكاديمية القادة المستقبليين"] },
-                    { category: "الحاضنات والمسرّعات", companies: ["GrowHub", "مسرعة النمو المتقدمة", "مركز التوسع"] },
-                    { category: "التمويل", companies: ["GrowFin", "صندوق النمو المستدام", "مجموعة الاستثمار الكبرى"] },
-                    { category: "دعم الشركات الكبرى", companies: ["مجموعة أوربك المتقدمة", "شركة الاستثمار الوطنية"] },
-                    { category: "الابتكار والبحث والتطوير", companies: ["مركز الأبحاث المتقدمة", "معهد الابتكار الصناعي"] },
-                    { category: "الجوائز والفعاليات", companies: ["مؤتمر النمو الدولي", "جوائز التميز"] },
-                    { category: "التمكين الحكومي", companies: ["هيئة التنمية المستدامة", "مجلس الاستثمار"] },
-                    { category: "التعليم", companies: ["شركة النماء", "الجامعة التقنية المتقدمة"] },
-                    { category: "الابتكار", companies: ["شركة عمان القابضة", "مركز الابتكار الاستراتيجي"] },
-                    { category: "ريادة الأعمال", companies: ["مجموعة الرؤية", "شبكة المستثمرين الدوليين"] },
-                    { category: "التقنية", companies: ["شركة التطوير الدولية", "مركز التقنيات المستقبلية"] },
-                    { category: "القيادة", companies: ["النمو الشامل", "معهد القيادة الاستراتيجية"] }
+                "الاستدامة": [
+                    { entity: "برامج المسؤولية الاجتماعية", support: "دعم مشاريع الاستدامة المجتمعية", link: "https://example.com/csr-programs" }
                 ]
             }
         };
 
-        // وصف المراحل
-        const phaseDescriptions = {
-            "إغرس": "مرحلة زراعة الأفكار وتطوير المواهب الأولية",
-            "ابدأ": "مرحلة بدء المشاريع والحصول على التمويل الأولي",
-            "انطلق": "مرحلة دخول السوق وتسريع النمو",
-            "انمُ": "مرحلة التوسع والنمو المستدام"
+        // أيقونات المجالات
+        const domainIcons = {
+            "التمويل": "💰",
+            "الثقافة": "📚",
+            "الدعم": "🤝",
+            "رأس المال البشري": "👥",
+            "الأسواق": "🏪",
+            "السياسات": "⚖️",
+            "التقنية": "💻",
+            "الاستدامة": "♻️"
         };
 
-        // أيقونات SVG مبسطة
-        function svgWrap(path) { return `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg>`; }
-        const iconMap = {
-            people: svgWrap("M17 21v-2a4 4 0 0 0-3-3.87M9 21v-2a4 4 0 0 1 3-3.87M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"),
-            rocket: svgWrap("M9 18V5l12-2-3 10-4 5-1-1-4 1z"),
-            money: svgWrap("M12 1v22M17 5H9a3 3 0 0 0 0 6h6a3 3 0 0 1 0 6H7"),
-            building: svgWrap("M3 21V8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v13"),
-            lab: svgWrap("M6 22h12M12 2v20"),
-            trophy: svgWrap("M17 21v-2a4 4 0 0 0-3-3.87M9 21v-2a4 4 0 0 1 3-3.87M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"),
-            shield: svgWrap("M12 2L3 7v6c0 5 3 9 9 11 6-2 9-6 9-11V7z"),
-            user: svgWrap("M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z")
+        // بيانات افتراضية للمراحل الأخرى
+        const defaultDomainsData = {
+            "التمويل": [
+                { entity: "جهات التمويل", support: "دعم مالي متنوع حسب احتياجات المرحلة", link: "https://example.com/funding" }
+            ],
+            "الثقافة": [
+                { entity: "جهات ثقافية", support: "برامج توعوية وتثقيفية", link: "https://example.com/cultural" }
+            ],
+            "الدعم": [
+                { entity: "جهات الدعم", support: "استشارات وخدمات مساندة", link: "https://example.com/support" }
+            ],
+            "رأس المال البشري": [
+                { entity: "جهات التدريب", support: "برامج تأهيل وتطوير كوادر", link: "https://example.com/training" }
+            ],
+            "الأسواق": [
+                { entity: "جهات التسويق", support: "دراسات سوقية وفرص تسويقية", link: "https://example.com/marketing" }
+            ],
+            "السياسات": [
+                { entity: "جهات تشريعية", support: "تسهيلات وإجراءات داعمة", link: "https://example.com/policies" }
+            ],
+            "التقنية": [
+                { entity: "جهات تقنية", support: "دعم تقني وبنية تحتية", link: "https://example.com/technology" }
+            ],
+            "الاستدامة": [
+                { entity: "جهات الاستدامة", support: "برامج ودعم للاستدامة", link: "https://example.com/sustainability" }
+            ]
         };
 
-        // تنسيق الأرقام
-        let useArabicIndic = true;
-        const fmt = (n) => new Intl.NumberFormat("ar-EG", { maximumFractionDigits: 2 }).format(n);
-        const fmtLatin = (n) => new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(n);
-
-        // عناصر DOM
-        const kpiGrid = () => document.getElementById("kpiGrid");
-        const phasesBox = () => document.getElementById("phases");
-        const partnersBody = () => document.getElementById("partnersTableBody");
-
-        // المرحلة الحالية
+        // المرحلة الحالية والمجال المحدد
         let currentPhase = "إغرس";
+        let selectedDomain = null;
 
-        // بناء KPIs
-        function renderKPIs() {
-            const wrap = kpiGrid(); wrap.innerHTML = "";
-            const data = phaseData[currentPhase];
-            data.kpis.forEach(k => {
-                const isRial = k.suffix === "ر.ع";
-                const suffixHtml = k.suffix ? `<span class="suffix">${isRial ? "ر.ع" : k.suffix}</span>` : "";
-                const card = document.createElement("div");
-                card.className = "card fade-in";
-                card.setAttribute("role", "group");
-                card.innerHTML = `
-          <div class="kpi" aria-label="${k.label}">
-            <div class="icon" aria-hidden="true">${iconMap[k.icon] || ""}</div>
-            <div>
-              <h3>${k.label}</h3>
-              <div class="value">
-                <span class="num" data-target="${k.value}" data-currency="${isRial}">0</span>
-                ${suffixHtml}
-              </div>
-            </div>
-          </div>`;
-                wrap.appendChild(card);
-            });
-        }
+        // بناء أزرار المجالات
+        function renderDomainButtons() {
+            const buttonsContainer = document.getElementById("domainsButtons");
+            buttonsContainer.innerHTML = "";
 
-        // بناء بطاقات المراحل
-        function renderPhases() {
-            const box = phasesBox(); box.innerHTML = "";
-            const data = phaseData[currentPhase];
-            data.phases.forEach(ph => {
-                const el = document.createElement("div");
-                el.className = "phase-card fade-in";
-                el.innerHTML = `
-          <div class="phase-head">
-            <div class="phase-name">${ph.name}</div>
-            <div class="badge">مرحلة</div>
-          </div>
-          <div class="phase-val"><span class="num" data-target="${ph.value}">0</span></div>
-          <div class="phase-sub">${ph.info}</div>`;
-                box.appendChild(el);
-            });
-        }
+            const domains = Object.keys(domainIcons);
 
-        // بناء جدول الشركاء
-        function renderPartners() {
-            const tbody = partnersBody(); tbody.innerHTML = "";
-            const data = phaseData[currentPhase];
-            data.partners.forEach(p => {
-                const row = document.createElement("tr");
-                row.className = "fade-in";
-                row.innerHTML = `
-          <td data-label="الفئة">${p.category}</td>
-          <td data-label="الشركات والجهات">${p.companies.join("، ")}</td>`;
-                tbody.appendChild(row);
-            });
-        }
+            domains.forEach(domain => {
+                const button = document.createElement("button");
+                button.className = "domain-btn";
+                button.innerHTML = `${domainIcons[domain]} ${domain}`;
+                button.dataset.domain = domain;
 
-        // عدادات متحركة
-        function animateCounters() {
-            document.querySelectorAll(".num").forEach(el => {
-                const target = Number(el.dataset.target);
-                const duration = 1200;
-                const start = performance.now();
-
-                function tick(now) {
-                    const progress = Math.min((now - start) / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    const current = target * eased;
-                    el.textContent = useArabicIndic ? fmt(current) : fmtLatin(current);
-                    if (progress < 1) { requestAnimationFrame(tick); }
-                    else { el.textContent = useArabicIndic ? fmt(target) : fmtLatin(target); }
+                if (domain === selectedDomain) {
+                    button.classList.add("active");
                 }
-                requestAnimationFrame(tick);
+
+                button.addEventListener("click", () => {
+                    selectDomain(domain);
+                });
+
+                buttonsContainer.appendChild(button);
             });
+        }
+
+        // اختيار مجال
+        function selectDomain(domain) {
+            selectedDomain = domain;
+            renderDomainButtons();
+            renderSupportTable();
+        }
+
+        // عرض حالة التحميل
+        function showLoading() {
+            document.body.classList.add('loading');
+            document.getElementById('supportTableBody').innerHTML = `
+                <tr>
+                    <td colspan="2" style="text-align: center; padding: 40px;">
+                        <div style="color: var(--muted);">جاري تحميل البيانات...</div>
+                    </td>
+                </tr>
+            `;
+        }
+
+        // بناء جدول الجهات الداعمة
+        function renderSupportTable() {
+            const tableBody = document.getElementById("supportTableBody");
+            const noDataMessage = document.getElementById("noDataMessage");
+            const tableContainer = document.querySelector('.support-table-container');
+
+            if (!selectedDomain) {
+                tableBody.innerHTML = "";
+                noDataMessage.style.display = "block";
+                return;
+            }
+
+            noDataMessage.style.display = "none";
+
+            // الحصول على البيانات الخاصة بالمرحلة والمجال المحدد
+            const phaseData = phaseDomainsData[currentPhase] || defaultDomainsData;
+            const domainData = phaseData[selectedDomain] || defaultDomainsData[selectedDomain] || [];
+
+            let tableHTML = "";
+
+            if (domainData.length > 0) {
+                domainData.forEach(item => {
+                    const entityCell = item.link
+                        ? `<a href="${item.link}" target="_blank" class="entity-link">${item.entity}</a>`
+                        : item.entity;
+
+                    tableHTML += `
+                        <tr>
+                            <td>${entityCell}</td>
+                            <td>${item.support}</td>
+                        </tr>
+                    `;
+                });
+            } else {
+                tableHTML = `
+                    <tr>
+                        <td colspan="2" style="text-align: center; color: var(--muted);">
+                            لا توجد بيانات متاحة لهذا المجال في المرحلة الحالية
+                        </td>
+                    </tr>
+                `;
+            }
+
+            tableBody.innerHTML = tableHTML;
+
+            // إضافة تأثير fade-in
+            tableContainer.classList.add('fade-in');
+            setTimeout(() => {
+                tableContainer.classList.remove('fade-in');
+            }, 500);
         }
 
         // شريط التقدم العلوي
         function updateProgressBar() {
-            const phases = ["إغرس", "ابدأ", "انطلق", "انمُ"];
+            const phases = [
+                "إغرس", "توليد الفكرة", "البحث السوقي",
+                "ابدأ", "التخطيط التجاري", "التمويل وتأمين الموارد",
+                "انطلق", "تطوير المنتج أو الخدمة", "الإطلاق ودخول السوق",
+                "انمُ", "النمو والتوسع", "الاستدامة والابتكار"
+            ];
             const currentIndex = phases.indexOf(currentPhase);
             const progressBar = document.getElementById("progress");
             progressBar.style.width = ((currentIndex + 1) / phases.length) * 100 + "%";
@@ -822,7 +1025,12 @@
         // تحديث حالات الـ steps
         function updatePhaseSteps() {
             const steps = document.querySelectorAll(".step");
-            const phases = ["إغرس", "ابدأ", "انطلق", "انمُ"];
+            const phases = [
+                "إغرس", "توليد الفكرة", "البحث السوقي",
+                "ابدأ", "التخطيط التجاري", "التمويل وتأمين الموارد",
+                "انطلق", "تطوير المنتج أو الخدمة", "الإطلاق ودخول السوق",
+                "انمُ", "النمو والتوسع", "الاستدامة والابتكار"
+            ];
             const currentIndex = phases.indexOf(currentPhase);
             steps.forEach((step, idx) => {
                 step.classList.remove("active", "completed");
@@ -840,17 +1048,19 @@
         // تغيير المرحلة بالكامل
         function updatePhaseData(newPhase) {
             if (newPhase === currentPhase) return;
-            document.body.classList.add("loading");
+
+            showLoading();
+
             setTimeout(() => {
                 currentPhase = newPhase;
+                selectedDomain = null; // إعادة تعيين المجال المحدد
                 updateCurrentPhaseIndicator();
                 updatePhaseSteps();
                 updateProgressBar();
-                renderKPIs();
-                renderPhases();
-                renderPartners();
+                renderDomainButtons();
+                renderSupportTable();
+                document.getElementById("currentPhaseForDomains").textContent = currentPhase;
                 document.body.classList.remove("loading");
-                setTimeout(() => animateCounters(), 100);
             }, 300);
         }
 
@@ -861,14 +1071,65 @@
             });
         }
 
-        // تبديل الأرقام
-        function toggleNumerals() {
-            useArabicIndic = !useArabicIndic;
-            animateCounters();
+        // تحسين إمكانية الوصول
+        function enhanceAccessibility() {
+            // جعل الخطوات قابلة للتنقل بواسطة keyboard
+            document.querySelectorAll('.step').forEach((step, index) => {
+                step.setAttribute('tabindex', '0');
+                step.setAttribute('aria-label', `المرحلة: ${step.dataset.phase}`);
+
+                step.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        updatePhaseData(step.dataset.phase);
+                    }
+                });
+            });
+
+            // تحديث حالة ARIA للمرحلة الحالية
+            document.querySelectorAll('.step').forEach(step => {
+                const isActive = step.classList.contains('active');
+                step.setAttribute('aria-current', isActive ? 'step' : 'false');
+            });
+        }
+
+        // إضافة وظيفة البحث
+        function addSearchFunctionality() {
+            const searchInput = document.getElementById('searchInput');
+
+            searchInput.addEventListener('input', function (e) {
+                filterTable(e.target.value);
+            });
+        }
+
+        function filterTable(searchTerm) {
+            const rows = document.querySelectorAll('#supportTableBody tr');
+            const lowerSearchTerm = searchTerm.toLowerCase();
+            let hasVisibleRows = false;
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const isVisible = text.includes(lowerSearchTerm);
+                row.style.display = isVisible ? '' : 'none';
+                if (isVisible) hasVisibleRows = true;
+            });
+
+            // إظهار رسالة إذا لم توجد نتائج
+            const noDataMessage = document.getElementById('noDataMessage');
+            if (!hasVisibleRows && searchTerm) {
+                noDataMessage.style.display = 'block';
+                noDataMessage.textContent = 'لا توجد نتائج تطابق البحث';
+            } else if (!hasVisibleRows) {
+                noDataMessage.style.display = 'block';
+                noDataMessage.textContent = 'اختر مجالاً لعرض الجهات الداعمة';
+            } else {
+                noDataMessage.style.display = 'none';
+            }
         }
 
         // طباعة
-        function printPage() { window.print(); }
+        function printPage() {
+            window.print();
+        }
 
         // تاريخ التحديث
         function updateLastUpdated() {
@@ -886,14 +1147,19 @@
             updateCurrentPhaseIndicator();
             updatePhaseSteps();
             updateProgressBar();
-            renderKPIs();
-            renderPhases();
-            renderPartners();
+            renderDomainButtons();
+            renderSupportTable();
             setupPhaseClickHandlers();
-            setTimeout(() => animateCounters(), 500);
+            enhanceAccessibility();
+            addSearchFunctionality();
 
-            document.getElementById("toggleNumerals").addEventListener("click", toggleNumerals);
             document.getElementById("print").addEventListener("click", printPage);
+
+            // إضافة تأثير عند التحميل
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
         }
 
         document.addEventListener("DOMContentLoaded", init);
